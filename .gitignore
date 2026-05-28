@@ -1,3 +1,10 @@
 # Ignore Microsoft Excel temporary lock files
 ~$*.xlsx
 ~$*.xls
+
+# Ignore Quartus support files
+db/
+incremental_db/
+output_files/
+simulation/
+*.bak
