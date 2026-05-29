@@ -9,7 +9,7 @@ Week 1 began with defining the RV32I instruction set, mapping out the operations
 1. Scope and Memory Configuration
 * **Uniform 32-Bit ISA:** Opted to stick to the standard 32-bit instruction length, foregoing RV32C compatibility to prioritize functionality and save design overhead
 * **Hybrid Dual-Port Memory:** Settled on a dual-ported memory scheme that stores code and data in a single address space but allows simultaneous single cycle instruction fetches and data lookups without memory conflicts
-	- Memory system is a Harvard Von-Neumann hybrid which enables potential future optimizations and pipelining\
+	- Memory system is a Harvard Von-Neumann hybrid which enables potential future optimizations and pipelining
 2. Microarchitecture Optimization and Timing Corrections
 * **Hardware Efficiency Shortcuts:** Used specific bits embedded within the native RISC-V instruction word to directly control datapath multilplexers cutting down on unnecessary control unit decoding logic
 * **The Mixed-Cycle Breakthrough:** Discovered a critical sequential hazard involving synchronous block RAM and register file reads. Refactored the entire ASM chart from a uniform 3-cycle model to a mixed 3/4-cycle flow, granting memory load instructions an extra machine cycle to let data propagate and settle safely.
@@ -29,4 +29,4 @@ The project design is largely completed, and component instantiation shells are 
 For next week, the immediate focus will be wrapping up the structural component footprints in the datapath file, routing local inputs and outputs, and beginning the implementation of explicit internal hardware logic block by block.
 
 ## Note on Intended Timetables:
-This project is intended to take approximately three months. Debugging, testing, and benchmarking is intended to take up somewhere between 1/3 to 2/3 of the time. Therefore, the goal is to have the RISC-V systemVerilog largely completed by the end of June. If a viable RISC-V is completed ahead of schedule, a decision will be made to either add FENCE, ECALL, and EBREAK compatibility, or a UART interface module.
+This project is intended to take approximately three months. Debugging, testing, and benchmarking is intended to take up somewhere between 1/3 to 2/3 of the total time. Therefore, the goal is to have the RISC-V systemVerilog largely completed by the end of June. If a viable RISC-V is completed ahead of schedule, a decision will be made to either add FENCE, ECALL, and EBREAK compatibility, or a UART interface module.
