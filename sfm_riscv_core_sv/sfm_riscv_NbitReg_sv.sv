@@ -1,19 +1,19 @@
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	N-Bit Multiplexer RISCV File
+	N-Bit Register RISCV File
 	Created by: Stephen Meyer (6/1/2026)
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH, SelNum, SelWidth)(input logic [SelNum-1:0][WIDTH-1:0]muxInput, input logic [SelWidth-1:0]Sel);
+module sfm_riscv_NbitReg_sv # (parameter int WIDTH)(input logic [WIDTH-1:0]D, input logic clk, rst, output logic [WIDTH-1:0]Q);
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
-always_comb begin
-	if (Sel < SelNum) begin		//Ensures select is valid
-		out = muxInput[SelNum];	//Selects
-	end else begin					//If it's not valid
-		out = '0;					//Set to 0
+always_ff @(posedge clk or posedge rst) begin
+	if (rst) begin
+		Q <= '0;
+	end else begin
+		Q <= D;
 	end
 end
 
