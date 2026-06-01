@@ -9,11 +9,11 @@ module sfm_riscv_NbitReg_sv # (parameter int WIDTH)(input logic [WIDTH-1:0]D, in
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
-always_ff @(posedge clk or posedge rst) begin
+always_ff @(posedge clk or posedge rst) begin	//activates on either rising edge of clock cycle or reset signal (reset async)
 	if (rst) begin
-		Q <= '0;
+		Q <= '0;												//If reset is high, set it to zero
 	end else begin
-		Q <= D;
+		Q <= D;												//If reset is not high, set Q equal to D
 	end
 end
 
