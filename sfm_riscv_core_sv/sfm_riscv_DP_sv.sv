@@ -24,7 +24,7 @@ logic [WIDTH-1:0]Imm;
 
 	sfm_riscv_ALU_sv #(.WIDTH(WIDTH)) ArithmeticLogicUnit (.intA(rsA), .intB(AluB), .Func3(IW[14:12]), .Func7(IW[30]), .ALUres(ALUres));
 	
-	//-------------------------------------------------ALU'S B INPUT MUX----------------RSB 1, IMM 0-----------------------//
+//----------------------------------------------------ALU'S B INPUT MUX----------------RSB 1, IMM 0-----------------------//
 	
 	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(2), .SelWidth(1)) RegMuxALU (.muxInput({rsB, Imm}), .Sel(IW[5]), .out(AluB));
 	
