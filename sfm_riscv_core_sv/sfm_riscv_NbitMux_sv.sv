@@ -5,13 +5,13 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH, SelNum, SelWidth)(input logic [SelNum-1:0][WIDTH-1:0]muxInput, input logic [SelWidth-1:0]Sel);
+module sfm_riscv_ALU_sv # (parameter int WIDTH, SelNum, SelWidth)(input logic [SelNum-1:0][WIDTH-1:0]muxInput, input logic [SelWidth-1:0]Sel, output logic [WIDTH-1:0]out);
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
 always_comb begin
 	if (Sel < SelNum) begin		//Ensures select is valid
-		out = muxInput[SelNum];	//Selects
+		out = muxInput[Sel];		//Selects
 	end else begin					//If it's not valid
 		out = '0;					//Set to 0
 	end
