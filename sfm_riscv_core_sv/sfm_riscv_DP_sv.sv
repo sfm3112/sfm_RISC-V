@@ -6,7 +6,7 @@
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WIDTH left undefined here so it must take the WIDTH defined in core, else compile error.                   NOT COMPLETED
-module sfm_riscv_DP_sv # (parameter int WIDTH)(input logic clk, rst, output logic [WIDTH-1:0]IW, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, LdOPDR,
+module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, LdOPDR,
 									output logic OPD);
 	
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
@@ -92,16 +92,7 @@ genvar i;
 
 //-------------------------------------------------IMMEDIATE SELECT STRUCTURE---------------------------------------------//
 
-	always_comb begin
-		case ({IW[6:5], IW[3:2]})
-			4'b0000 : Imm = I;
-			4'b0100 : Imm = S;
-			4'b1100 : Imm = B;
-			4'b0101 : Imm = U;
-			4'b1111 : Imm = J;
-			default : Imm = 32'b0;
-		endcase
-	end
+	sfm_riscv_ImmSelMux_sv #(.WIDTH(WIDTH)) ImmediateSelectMultiplexer (.ImmIW({IW[6:5], IW[3:2]}), .I(I), .S(S), .B(B), .U(U), .J(J), .Imm(Imm));
 	
 ////////////////////////////////////////////////////////IOP COMPONENTS//////////////////////////////////////////////////////
 
