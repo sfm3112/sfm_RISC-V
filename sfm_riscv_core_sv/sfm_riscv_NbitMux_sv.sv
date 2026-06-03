@@ -5,7 +5,7 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH, SelNum, SelWidth)(input logic [SelNum-1:0][WIDTH-1:0]muxInput, input logic [SelWidth-1:0]Sel, output logic [WIDTH-1:0]out);
+module sfm_riscv_NbitMux_sv # (parameter int WIDTH, SelNum, SelWidth)(input logic [SelNum-1:0][WIDTH-1:0]muxInput, input logic [SelWidth-1:0]Sel, output logic [WIDTH-1:0]out);
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
