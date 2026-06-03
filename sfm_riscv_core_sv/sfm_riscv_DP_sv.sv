@@ -16,7 +16,7 @@ logic [WIDTH-1:0]ALUres, AluB;	//ALU wires
 logic [WIDTH-1:0]Imm;
 logic [WIDTH-1:0]WBout;
 logic [WIDTH-1:0][WIDTH-1:0]xQ;
-logic MAXin, MAXout, MABout, MARout;
+logic [WIDTH-1:0]MAXin, MAXout, MABout, MARout;
 logic [WIDTH-1:0]PCout, PMout, DMout;
 logic [WIDTH-1:0]LB, LH, LW, LBU, LHU, LWB;
 logic [WIDTH-1:0]I, S, B, U, J;
@@ -88,7 +88,7 @@ genvar i;
 	
 /////////////////////////////////////////////////////IMMEDIATE COMPONENTS///////////////////////////////////////////////////
 
-	sfm_riscv_immPro_sv #(.WIDTH(.WIDTH)) immediateProcessor (.IW(), .I(I), .S(S), .B(B), .U(U), .J(J));
+	sfm_riscv_immPro_sv #(.WIDTH(WIDTH)) immediateProcessor (.IW(IW), .I(I), .S(S), .B(B), .U(U), .J(J));
 
 //-------------------------------------------------IMMEDIATE SELECT STRUCTURE---------------------------------------------//
 
