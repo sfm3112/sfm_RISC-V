@@ -3,6 +3,8 @@
 	Data Path RISCV File
 	Created by: Stephen Meyer (6/4/2026)
 
+	Copyright (C) 2026 Stephen Meyer
+
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW,

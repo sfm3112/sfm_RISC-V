@@ -2,6 +2,19 @@
 
 A custom multi-cycle RV32I-compatible processor written in SystemVerilog for FPGA implementation.
 
+Developed by Stephen Meyer
+Contact sfm3112@rit.edu
+GitHub Page: https://github.com/sfm3112
+
+## Overview
+
+This project implements a custom 32-bit RV32I processor featuring:
+- Multi-cycle execution architecture
+- 32-register general-purpose register file
+- ALU and immediate generation hardware
+- Hybrid Harvard/Von Neumann memory organization
+- Custom control-unit FSM and datapath design
+
 ## Current Status
 
 **In Development**
