@@ -41,6 +41,7 @@ Key features:
 * Hybrid Harvard/Von Neumann memory organization
 * Separate instruction fetch and data access ports
 * SystemVerilog RTL implementation
+* Downloadable QAR file will be generated once RISC-V is operational
 
 ## Repository Structure
 
