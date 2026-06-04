@@ -44,23 +44,18 @@ Key features:
 
 ## Repository Structure
 
-/Quartus_Project
+Quartus Project
 
-* Register file
-* ALU
-* Immediate processor
-* Memory interface
+* [RISC-V SystemVerilog](/sfm_riscv_core_sv)
 
-/Design_Docs
+Design Docs
 
-* FSM
-* Control state decoder
+* [Design documentation](/Design_Docs)
 
-/Logs&Notes
+Logs and Notes
 
-* Datapath diagrams
-* ASM charts
-* Design notes
+* [Daily Logs](/Daily_Logs)
+* [Weekly Summaries](/Weekly_Summaries)
 
 ## Supported Instructions
 
