@@ -10,3 +10,7 @@ simulation/
 *.bak
 *.txt
 *.qip
+*.qpf
+*.qsf
+
+*.ini
