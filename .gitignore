@@ -12,5 +12,6 @@ simulation/
 *.qip
 *.qpf
 *.qsf
+*.qws
 
 *.ini
