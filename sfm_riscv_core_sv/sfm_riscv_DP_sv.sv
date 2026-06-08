@@ -9,7 +9,7 @@
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WIDTH left undefined here so it must take the WIDTH defined in core, else compile error.                   NOT COMPLETED
-module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, LdOPDR,
+module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, pR_W, dR_W, LdOPDR,
 									output logic OPD);
 	
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ genvar i;
 // NOTE ADDRESSES ARE 12-BIT NOT 32-BIT
 //--------------------------------------------------COMBINED PM-DM MODULE-------------------------------------------------//
 
-	PM_DM PM_DM_RAM (.address_a(PCout[11:0]), .address_b(MARout[11:0]), .byteena_b(), .clock(clk), .data_a(), .data_b(), .wren_a(), .wren_b(), .q_a(PMout), .q_b(DMout));
+	PM_DM PM_DM_RAM (.address_a(PCout[11:0]), .address_b(MARout[11:0]), .byteena_b(4'b1111), .clock(clk), .data_a(32'b0), .data_b(rsB), .wren_a(pR_W), .wren_b(dR_W), .q_a(PMout), .q_b(DMout));
 
 //--------------------------------------------------PROGRAM COUNTER MODULE------------------------------------------------//
 

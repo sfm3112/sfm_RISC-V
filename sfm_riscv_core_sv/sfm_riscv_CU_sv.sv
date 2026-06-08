@@ -8,7 +8,7 @@
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW, output logic [1:0] WBsel,
-																	output logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, LdOPDR);
+																	output logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR);
 
 /////////////////////////////////////////////////////////CONSTANTS//////////////////////////////////////////////////////////
 
@@ -62,7 +62,7 @@ always_comb begin
 	case (MC)
 //-----------------------------------------------------------MC0----------------------------------------------------------//	
 		MC0 : begin
-			LdPC = 1'b0; cntPC = 1'b1; LDrd = 1'b0; LdIWR = 1'b1; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; LdOPDR = 1'b0; next_MC = MC1;
+			LdPC = 1'b0; cntPC = 1'b1; LDrd = 1'b0; LdIWR = 1'b1; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC1;
 		end
 		
 //		MC1 : begin
@@ -72,39 +72,39 @@ always_comb begin
 		MC1 : begin
 		case (IW[6:0])
 			TYPE_R : begin
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = ALU_RES; LdMAB = 1'b0; LdMAX = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = ALU_RES; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_I : begin		//Same as TYPE_R
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = ALU_RES; LdMAB = 1'b0; LdMAX = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = ALU_RES; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_L : begin
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			TYPE_JR : begin	//Should be same as Type L mc1? If they are, could possibly be combined
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			TYPE_S : begin		//Appears to be the same as L as well
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			TYPE_B : begin		//Also same as L
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			TYPE_UI : begin
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = IMM; LdMAB = 1'b0; LdMAX = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = IMM; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_UPC : begin
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			TYPE_J : begin		//Same as UPC
-				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; LdOPDR = 1'b0; next_MC = MC2;
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b1; LdMAX = 1'b1; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC2;
 			end
 			
 			default : begin
@@ -118,24 +118,17 @@ always_comb begin
 	
 		MC2 : begin
 		case (IW[6:0])
-			TYPE_R : begin
-			
-			end
-			
-			TYPE_I : begin
-				
-			end
 			
 			TYPE_L : begin
-			
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = LD_WB; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_JR : begin
-			
+				LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = PCOUT; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_S : begin
-			
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b1; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_B : begin
