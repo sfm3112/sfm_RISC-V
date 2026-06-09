@@ -134,66 +134,63 @@ always_comb begin
 			TYPE_B : begin
 				case (IW[14:12])
 					3'b000 : begin
-						if (CNZres[0]) begin
-							//branch
-						end else begin
-							//dont branch
+						if (CNZres[0]) begin //branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else begin		//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 					3'b001 : begin
-						if (! CNZres[0]) begin
-							//branch
-						end else begin
-							//dont branch
+						if (! CNZres[0]) begin	//branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else begin		//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 					3'b100 : begin
-						if (CNZres[1]) begin
-							//branch
-						end else if
-							//dont branch
+						if (CNZres[1]) begin		//branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else if		//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 					3'b101 : begin
-						if (! CNZres[1]) begin
-							//branch
-						end else if
-							//don't branch
+						if (! CNZres[1]) begin	//branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else if			//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 					3'b110 : begin
-						if (! CNZres[2]) begin
-							//branch
-						end else if
-							//dont branch
+						if (! CNZres[2]) begin	//branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else if		//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 					3'b111 : begin
-						if (CNZres[2]) begin
-							//branch
-						end else if
-							//dont branch
+						if (CNZres[2]) begin		//branch
+							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+						end else if		//dont branch
+							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
 			
 			end
 			
-			TYPE_UI : begin
-			
-			end
-			
 			TYPE_UPC : begin
-			
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = MAROUT; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 			TYPE_J : begin
-			
+				LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b1; LdIWR = 1'b0; WBsel = PCOUT; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+
 			end
 			
 			default : begin
