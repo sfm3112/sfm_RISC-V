@@ -7,7 +7,7 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW, input logic [1:0] NZres, output logic [1:0] WBsel,
+module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW, input logic [2:0] CNZres, output logic [1:0] WBsel,
 																	output logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR);
 
 /////////////////////////////////////////////////////////CONSTANTS//////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ always_comb begin
 			TYPE_B : begin
 				case (IW[14:12])
 					3'b000 : begin
-						if (NZres[0]) begin
+						if (CNZres[0]) begin
 							//branch
 						end else begin
 							//dont branch
@@ -142,7 +142,7 @@ always_comb begin
 					end
 					
 					3'b001 : begin
-						if (! NZres[0]) begin
+						if (! CNZres[0]) begin
 							//branch
 						end else begin
 							//dont branch
@@ -150,7 +150,7 @@ always_comb begin
 					end
 					
 					3'b100 : begin
-						if (NZres[1]) begin
+						if (CNZres[1]) begin
 							//branch
 						end else if
 							//dont branch
@@ -158,7 +158,7 @@ always_comb begin
 					end
 					
 					3'b101 : begin
-						if (! NZres[1]) begin
+						if (! CNZres[1]) begin
 							//branch
 						end else if
 							//don't branch
@@ -166,7 +166,20 @@ always_comb begin
 					end
 					
 					3'b110 : begin
-						if (
+						if (! CNZres[2]) begin
+							//branch
+						end else if
+							//dont branch
+						end
+					end
+					
+					3'b111 : begin
+						if (CNZres[2]) begin
+							//branch
+						end else if
+							//dont branch
+						end
+					end
 					
 			
 			end

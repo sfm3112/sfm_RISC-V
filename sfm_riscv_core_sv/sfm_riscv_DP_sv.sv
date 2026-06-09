@@ -9,7 +9,7 @@
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WIDTH left undefined here so it must take the WIDTH defined in core, else compile error.                   NOT COMPLETED
-module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, output logic [1:0]NZres, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, pR_W, dR_W, LdOPDR,
+module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, output logic [2:0]CNZres, input logic LDrd, LdPC, cntPC, LdIWR, WBsel, LdMAB, LdMAX, pR_W, dR_W, LdOPDR,
 									output logic OPD);
 	
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
@@ -30,7 +30,7 @@ logic [WIDTH-1:0]I, S, B, U, J;
 
 //----------------------------------------------------------ALU-----------------------------------------------------------//
 
-	sfm_riscv_ALU_sv #(.WIDTH(WIDTH)) ArithmeticLogicUnit (.intA(rsA), .intB(AluB), .Func3(IW[14:12]), .add_sub(((IW[30] & IW[5]) | IW[6])), .ALUres(ALUres), .NZres(NZres));
+	sfm_riscv_ALU_sv #(.WIDTH(WIDTH)) ArithmeticLogicUnit (.intA(rsA), .intB(AluB), .Func3(IW[14:12]), .add_sub(((IW[30] & IW[5]) | IW[6])), .ALUres(ALUres), .CNZres(CNZres));
 	
 //----------------------------------------------------ALU'S B INPUT MUX----------------RSB 1, IMM 0-----------------------//
 	

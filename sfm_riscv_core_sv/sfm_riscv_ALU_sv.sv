@@ -7,11 +7,12 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]intA, intB, input logic [2:0]Func3, input logic add_sub, output logic [WIDTH-1:0]ALUres, output logic [1:0]NZres);
+module sfm_riscv_ALU_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]intA, intB, input logic [2:0]Func3, input logic add_sub, output logic [WIDTH-1:0]ALUres, output logic [2:0]CNZres);
 
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
 
 logic [WIDTH-1:0]addSubRes, SLLres, SLTres, SLTUres, XORres, SrlSraRes, ORres, ANDres;
+logic [WIDTH:0] FintA, FintB, FaddSubRes;
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
@@ -32,9 +33,11 @@ always_comb begin
 end
 	
 //////////////////////////////////////////////////////////ADD-SUB///////////////////////////////////////////////////////////
-
-assign addSubRes = intA + (intB ^ {WIDTH{add_sub}}) + add_sub;
-assign NZres = {addSubRes[WIDTH-1], !ALUres};
+assign FintA = {1'b0, intA};
+assign FintB = {1'b0, intB};
+assign FaddSubRes = FintA + (FintB ^ {WIDTH{add_sub}}) + add_sub;
+assign addSubRes = FaddSubRes[WIDTH-1:0];
+assign CNZres = {addSubRes[WIDTH], addSubRes[WIDTH-1], !ALUres};
 
 //////////////////////////////////////////////////////////SLLres////////////////////////////////////////////////////////////
 
