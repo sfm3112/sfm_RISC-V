@@ -7,7 +7,7 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW, input logic [2:0] CNZres, output logic [1:0] WBsel,
+module sfm_riscv_CU_sv # (parameter int WIDTH = 32)(input logic clk, rst, input logic [WIDTH-1:0]IW, input logic [2:0] CNZres, output logic [2:0] WBsel,
 																	output logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR);
 
 /////////////////////////////////////////////////////////CONSTANTS//////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ logic [1:0] next_MC;
 localparam logic [2:0] IMM 		= 3'd0;		//NOTE: CURRENTLY NOT PROPERLY MAPPED, WILL BE FIXED SOON
 localparam logic [2:0] ALU_RES	= 3'd1;
 localparam logic [2:0] LD_WB 		= 3'd2;
-localparam logic [2:0] IW 			= 3'd3;
+localparam logic [2:0] IW_SEL 	= 3'd3;
 localparam logic [2:0] INPUT 		= 3'd4;
 localparam logic [2:0] MAROUT		= 3'd5;
 localparam logic [2:0] PCOUT 		= 3'd6;
@@ -108,7 +108,7 @@ always_comb begin
 			end
 			
 			default : begin
-			
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 		endcase
@@ -152,7 +152,7 @@ always_comb begin
 					3'b100 : begin
 						if (CNZres[1]) begin		//branch
 							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
-						end else if		//dont branch
+						end else begin		//dont branch
 							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
@@ -160,7 +160,7 @@ always_comb begin
 					3'b101 : begin
 						if (! CNZres[1]) begin	//branch
 							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
-						end else if			//dont branch
+						end else begin			//dont branch
 							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
@@ -168,7 +168,7 @@ always_comb begin
 					3'b110 : begin
 						if (! CNZres[2]) begin	//branch
 							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
-						end else if		//dont branch
+						end else begin		//dont branch
 							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
@@ -176,12 +176,16 @@ always_comb begin
 					3'b111 : begin
 						if (CNZres[2]) begin		//branch
 							LdPC = 1'b1; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
-						end else if		//dont branch
+						end else begin		//dont branch
 							LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 						end
 					end
 					
-			
+					default : begin
+						LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+					end
+					
+				endcase
 			end
 			
 			TYPE_UPC : begin
@@ -194,14 +198,14 @@ always_comb begin
 			end
 			
 			default : begin
-			
+				LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 			end
 			
 		endcase
 		end
 		
 		default : begin
-			
+			LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
 		end
 		
 	endcase

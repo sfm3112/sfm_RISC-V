@@ -37,7 +37,7 @@ assign FintA = {1'b0, intA};
 assign FintB = {1'b0, intB};
 assign FaddSubRes = FintA + (FintB ^ {WIDTH{add_sub}}) + add_sub;
 assign addSubRes = FaddSubRes[WIDTH-1:0];
-assign CNZres = {addSubRes[WIDTH], addSubRes[WIDTH-1], !ALUres};
+assign CNZres = {FaddSubRes[WIDTH], FaddSubRes[WIDTH-1], !ALUres};
 
 //////////////////////////////////////////////////////////SLLres////////////////////////////////////////////////////////////
 
@@ -58,7 +58,7 @@ assign XORres = intA ^ intB;
 /////////////////////////////////////////////////////////SrlSraRes//////////////////////////////////////////////////////////
 
 always_comb begin
-	unique case (Func7)
+	unique case (add_sub) //unsure about this input, watch for bugs
 		1'b0 : SrlSraRes = intA >> intB[4:0];
 		1'b1 : SrlSraRes = $signed(intA) >>> intB[4:0];
 		default : SrlSraRes = '0;
