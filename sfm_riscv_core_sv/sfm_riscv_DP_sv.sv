@@ -2,7 +2,6 @@
 
 	Data Path RISCV File
 	Created by: Stephen Meyer (5/29/2026)
-	Student Email: sfm3112@rit.edu
 	
 	Copyright (C) 2026 Stephen Meyer
 

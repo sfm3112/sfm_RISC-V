@@ -13,7 +13,7 @@ module sfm_riscv_BMaskLogic_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
 	always_comb begin
-		case (func3)
+		case (Func3)
 			000 : begin //LB
 				unique case (MAR2)
 					00 : LD = {{24{DM[7]}}, DM[7:0]};
@@ -53,6 +53,7 @@ module sfm_riscv_BMaskLogic_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1
 					default : LD = '0;
 				endcase
 			end
+			default : LD = '0;
 		endcase		
 	end
 

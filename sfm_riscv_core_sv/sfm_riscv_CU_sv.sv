@@ -36,14 +36,15 @@ logic [1:0] next_MC;
 
 //-----------------------------------------------------WB_SEL SIGNALS-----------------------------------------------------//
 
-localparam logic [2:0] IMM 		= 3'd0;		//NOTE: CURRENTLY NOT PROPERLY MAPPED, WILL BE FIXED SOON
-localparam logic [2:0] ALU_RES	= 3'd1;
-localparam logic [2:0] LD_WB 		= 3'd2;
+localparam logic [2:0] ALU_RES	= 3'd0;
+localparam logic [2:0] LD_WB 		= 3'd1;
+localparam logic [2:0] IMM 		= 3'd2;
 localparam logic [2:0] IW_SEL 	= 3'd3;
-localparam logic [2:0] INPUT 		= 3'd4;
-localparam logic [2:0] MAROUT		= 3'd5;
-localparam logic [2:0] PCOUT 		= 3'd6;
+localparam logic [2:0] MAROUT		= 3'd4;
+localparam logic [2:0] PCOUT 		= 3'd5;
+localparam logic [2:0] INPUT 		= 3'd6;
 localparam logic [2:0] NA 			= 3'd7;
+
 
 ///////////////////////////////////////////////////////CONTROL UNIT/////////////////////////////////////////////////////////
 
