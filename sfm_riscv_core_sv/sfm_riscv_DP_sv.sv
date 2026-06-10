@@ -76,7 +76,7 @@ genvar i;
 	
 //----------------------------------------------------BIT MASK LOGIC BLOCK------------------------------------------------//
 	
-	sfm_riscv_BMaskLogic_sv #(.WIDTH(WIDTH)) BitMaskLogic (.DM(DMout), .Func3(IW[14:12]), .MAR2(MARout[1:0]), .LDout(LD));
+	sfm_riscv_BMaskLogic_sv #(.WIDTH(WIDTH)) BitMaskLogic (.DM(DMout), .Func3(IW[14:12]), .MAR2(MARout[1:0]), .LD(LD));
 	
 //---------------------------------------------------WRITE BACK MULTIPLEXER-----------------------------------------------//
 	
