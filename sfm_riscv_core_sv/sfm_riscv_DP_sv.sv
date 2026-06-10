@@ -21,8 +21,9 @@ logic [WIDTH-1:0]WBout;
 logic [WIDTH-1:0][WIDTH-1:0]xQ;
 logic [WIDTH-1:0]MAXin, MAXout, MABout, MARout;
 logic [WIDTH-1:0]PCout, PMout, DMout;
-logic [WIDTH-1:0]LB, LH, LW, LBU, LHU, LWB;
+logic [WIDTH-1:0]LD;
 logic [WIDTH-1:0]I, S, B, U, J;
+logic [3:0]byteEnable;
 
 ///////////////////////////////////////////////////COMPONENT INSTANTIATION//////////////////////////////////////////////////
 
@@ -56,10 +57,14 @@ genvar i;
 	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(WIDTH), .SelWidth(5)) RegMuxB (.muxInput(xQ), .Sel(IW[24:20]), .out(rsB));
 
 ///////////////////////////////////////////////////////MEMORY COMPONENTS////////////////////////////////////////////////////
-// NOTE ADDRESSES ARE 12-BIT NOT 32-BIT
-//--------------------------------------------------COMBINED PM-DM MODULE-------------------------------------------------//
 
-	PM_DM PM_DM_RAM (.address_a(PCout[11:0]), .address_b(MARout[11:0]), .byteena_b(4'b1111), .clock(clk), .data_a(32'b0), .data_b(rsB), .wren_a(pR_W), .wren_b(dR_W), .q_a(PMout), .q_b(DMout));
+//--------------------------------------------------BYTE ENABLE DATA LOGIC------------------------------------------------//
+
+	sfm_riscv_byteEnLogic_sv byteEnLogic (.func3(IW[14:12]), .MAR2(MARout[1:0]), .byteEnable(byteEnable[3:0]));
+
+//--------------------------------------------------COMBINED PM-DM MODULE-------------------------------------------------//
+// NOTE ADDRESSES ARE 12-BIT NOT 32-BIT, PCOUT USES BITS [13:2] SINCE PC INCREMENTS BY 4
+	PM_DM PM_DM_RAM (.address_a(PCout[13:2]), .address_b(MARout[13:2]), .byteena_b(byteEnable), .clock(clk), .data_a(32'b0), .data_b(rsB), .wren_a(pR_W), .wren_b(dR_W), .q_a(PMout), .q_b(DMout));
 
 //--------------------------------------------------PROGRAM COUNTER MODULE------------------------------------------------//
 
@@ -71,15 +76,11 @@ genvar i;
 	
 //----------------------------------------------------BIT MASK LOGIC BLOCK------------------------------------------------//
 	
-	sfm_riscv_BMaskLogic_sv #(.WIDTH(WIDTH)) BitMaskLogic (.DM(DMout), .LB(LB), .LH(LH), .LW(LW), .LBU(LBU), .LHU(LHU));
-	
-//-----------------------------------------------------LOAD MULTIPLEXER-------------GOES SEL 7 -> 0-----------------------//	
-
-	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(8), .SelWidth(3)) LDmux (.muxInput({32'b0, 32'b0, LHU, LBU, 32'b0, LW, LH, LB}), .Sel(IW[14:12]), .out(LWB));
+	sfm_riscv_BMaskLogic_sv #(.WIDTH(WIDTH)) BitMaskLogic (.DM(DMout), .Func3(IW[14:12]), .MAR2(MARout[1:0]), .LDout(LD));
 	
 //---------------------------------------------------WRITE BACK MULTIPLEXER-----------------------------------------------//
 	
-	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(8), .SelWidth(3)) WBmux (.muxInput({32'b0, 32'b0, PCout, MARout, IW, Imm, LWB, ALUres}), .Sel(WBsel), .out(dW));
+	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(8), .SelWidth(3)) WBmux (.muxInput({32'b0, 32'b0, PCout, MARout, IW, Imm, LD, ALUres}), .Sel(WBsel), .out(dW));
 
 //---------------------------------------------------MAB AND MAX REGISTERS------------------------------------------------//
 	

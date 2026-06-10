@@ -2,19 +2,34 @@
 
 	Bit Mask Logic Module RISCV File
 	Created by: Stephen Meyer (6/2/2026)
+	Updated: (6/10/2026)
 	
 	Copyright (C) 2026 Stephen Meyer
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_BMaskLogic_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]DM, output logic [WIDTH-1:0]LB, LH, LW, LBU, LHU);
+module sfm_riscv_BMaskLogic_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]DM, input logic [1:0]MAR2, input logic [2:0]Func3, output logic [WIDTH-1:0]LDout);
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
-assign LB = {{24{DM[7]}}, DM[7:0]};		//Load Byte (signed)
-assign LH = {{16{DM[15]}}, DM[15:0]};	//Load halfword (signed)
-assign LW = DM;								//Load Word (whole word)
-assign LBU = {24'b0, DM[7:0]};			//Load Byte (unsigned)
-assign LHU = {16'b0, DM[15:0]};			//Load Halfword (unsigned)
+	always_comb begin
+		case (func3)
+			000 : begin
+				
+			end
+			001 : begin
+			
+			end
+			010 : begin
+			
+			end
+			100 : begin
+			
+			end
+			101 : begin
+			
+			end
+		endcase		
+	end
 
 endmodule
