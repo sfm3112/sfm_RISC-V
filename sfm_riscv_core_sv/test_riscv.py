@@ -8,6 +8,8 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
 
+# Function to check for MC0 #
+
 async def waitForNextIW(dut):
 	while int(dut.MC.value) == 0:
 		await RisingEdge(dut.clk)
@@ -16,6 +18,9 @@ async def waitForNextIW(dut):
 
 @cocotb.test()
 async def testA(dut):
+	
+	# Initial setup lines #
+	
     clock = Clock(dut.clk, 10, units="ns")  #creates the clock cycle
     cocotb.start_soon(clock.start())        #tells program to begin pulsing clock cycle, .start_soon tells it to run in the background
 
@@ -24,7 +29,17 @@ async def testA(dut):
     dut.rst.value = 0
     await RisingEdge(dut.clk)      # ensure its back in sync with clock cycle (since rst is an async signal)
 
+    # Dynamic TestBench #
     
+    # Read the .s assembly file #
     
+    goodOutput = []	# Creates the variable to store the good expected outputs for the test bench
+    
+    with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
+		for line in asm:	# For loop
+			match = re.search(r"#\s*x(\d+)\s*(0x[0-9a-fA-F]+|-?\d+)", line)
+			if match:
+				
+			
     
     pass
