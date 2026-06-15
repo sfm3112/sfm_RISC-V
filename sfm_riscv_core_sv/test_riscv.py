@@ -8,6 +8,12 @@ import cocotb
 from cocotb.clock import Clock
 from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
 
+async def waitForNextIW(dut):
+	while int(dut.MC.value) == 0:
+		await RisingEdge(dut.clk)
+	while int(dut.MC.value != 0:
+		await RisingEdge(dut.clk)
+
 @cocotb.test()
 async def testA(dut):
     clock = Clock(dut.clk, 10, units="ns")  #creates the clock cycle
@@ -17,7 +23,7 @@ async def testA(dut):
     await ClockCycles(dut.clk, 2)  # reset for 2 clock cycles
     dut.rst.value = 0
     await RisingEdge(dut.clk)      # ensure its back in sync with clock cycle (since rst is an async signal)
-    
+
     
     
     
