@@ -37,9 +37,19 @@ async def testA(dut):
     
     with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
 		for line in asm:	# For loop
-			match = re.search(r"#\s*x(\d+)\s*(0x[0-9a-fA-F]+|-?\d+)", line)
+			match = re.search(r"#\s*x(\d+)\s*(0x[0-9a-fA-F]+|-?\d+)", line)	# extracts the register result comment and assigns it to match (check log for specific syntax)
 			if match:
+				regNum = int(match.group(1))	# puts the register number in regNum secured from the re.search()
+				rawVal = match.group(2)			# puts the raw value into rawVal, cannot be an int yet because it could also be a hex value
 				
+				val = int(rawVal, 16) if "0x" in rawVal.lower() else int(rawVal)	# if hex (0x), chenge the base to 16 instead of base 10, else just use base 10
+				
+				if val < 0:		# Python can't compare a negative decimal to a negative binary 2'sC
+					val = (1 << 32) + val	# rotates the 1 to the maximum negative binary value, interpreted as very large decimal value, subtract the register value
+					
+				goodOutput.append((regNum, val, line.strip()))
+				
+	
 			
     
     pass
