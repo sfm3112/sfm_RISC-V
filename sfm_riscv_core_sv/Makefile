@@ -25,5 +25,8 @@ TOPLEVEL = sfm_riscv_core_sv
 # MODULE tells cocotb which file is the testbench file
 MODULE = test_riscv
 
-# Part of the template, locates cocotb finds the master simulator script, adds necessary background code
-include $(shell cocotb-config --makefiles)/Makefile.sim
+# Old line: include $(shell cocotb-config --makefiles)/Makefile.sim
+
+# New Line:
+COCOTB_SHARE_DIR = $(shell python -c "import os, cocotb; print(os.path.dirname(cocotb.__file__) + '/share')")
+include $(COCOTB_SHARE_DIR)/makefiles/Makefile.sim
