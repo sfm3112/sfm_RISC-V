@@ -1,4 +1,4 @@
-_start:	# x1 = 2, x2 = 3, x3 = tbOut, x4 = -5
+_start:
 	addi x1, x0, 2	# x1 = 2
 	addi x2, x0, 3	# x2 = 3
 	addi x4, x0, -5	# x4 = -5
