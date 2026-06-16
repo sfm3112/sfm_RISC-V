@@ -13,7 +13,7 @@ from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
 async def waitForNextIW(dut):
 	while int(dut.MC.value) == 0:
 		await RisingEdge(dut.clk)
-	while int(dut.MC.value != 0:
+	while int(dut.MC.value) != 0:
 		await RisingEdge(dut.clk)
 
 @cocotb.test()
@@ -37,7 +37,7 @@ async def testA(dut):
     
     with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
 		for line in asm:	# For loop
-			match = re.search(r"#\s*x(\d+)\s*(0x[0-9a-fA-F]+|-?\d+)", line)	# extracts the register result comment and assigns it to match (check log for specific syntax)
+			match = re.search(r"#\s*x(\d+)\s*=\s*(0x[0-9a-fA-F]+|-?\d+)", line)	# extracts the register result comment and assigns it to match (check log for specific syntax)
 			if match:
 				regNum = int(match.group(1))	# puts the register number in regNum secured from the re.search()
 				rawVal = match.group(2)			# puts the raw value into rawVal, cannot be an int yet because it could also be a hex value
@@ -62,16 +62,16 @@ async def testA(dut):
 		
 		dut._log.info("General test bench completed successfully.")	# Text printout
 		
-		dut._log.info("Testing branch loop.")	# Text printout
+	dut._log.info("Testing branch loop.")	# Text printout
 		
-		await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
+	await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 		
-		final_x1 = int(dut.register_file.regs[1].value)	# store final result of x1
-		final_x2 = int(dut.register_file.regs[2].value)	# store final result of x2
+	final_x1 = int(dut.register_file.regs[1].value)	# store final result of x1
+	final_x2 = int(dut.register_file.regs[2].value)	# store final result of x2
 		
-		assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
-		assert final_x2 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x2}"
+	assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
+	assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
 	
-		dut._log.info("Branch test bench successful.")	# Final text printout
+	dut._log.info("Branch test bench successful.")	# Final text printout
     
     pass
