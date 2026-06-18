@@ -15,6 +15,7 @@ VERILOG_SOURCES = $(shell pwd)/sfm_riscv_core_sv.sv \
 				  $(shell pwd)/sfm_riscv_NbitReg_sv.sv \
 				  $(shell pwd)/sfm_riscv_PC_sv.sv \
 				  $(shell pwd)/sfm_riscv_WbDec_sv.sv \
+				  $(shell pwd)/sfm_riscv_BMaskLogic_sv.sv \
                   $(shell pwd)/PM_DM.v
 				  
 # COMPILE_ARGS tells it there is an additional command, that its actually systemVerilog, not just Verilog
