@@ -21,6 +21,9 @@ VERILOG_SOURCES = $(shell pwd)/sfm_riscv_core_sv.sv \
 # COMPILE_ARGS tells it there is an additional command, that its actually systemVerilog, not just Verilog
 COMPILE_ARGS += -sv
 
+# Necessary to use the RAM module which uses altera libraries
+SIM_ARGS += -L altera_mf_ver
+
 # TOPLEVEL tells it which file is actually the top level
 COCOTB_TOPLEVEL = sfm_riscv_core_sv
 # MODULE tells cocotb which file is the testbench file
