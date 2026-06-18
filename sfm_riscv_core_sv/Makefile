@@ -28,5 +28,5 @@ MODULE = test_riscv
 # Old line: include $(shell cocotb-config --makefiles)/Makefile.sim
 
 # New Line:
-COCOTB_SHARE_DIR = $(shell cygpath -u $(shell cocotb-config --makefiles))
+COCOTB_MAKEFILES_DIR = $(shell cygpath -u $(shell cocotb-config --makefiles))
 include $(COCOTB_MAKEFILES_DIR)/Makefile.sim
