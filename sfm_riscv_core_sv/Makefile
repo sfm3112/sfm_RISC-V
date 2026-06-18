@@ -21,9 +21,9 @@ VERILOG_SOURCES = $(shell pwd)/sfm_riscv_core_sv.sv \
 COMPILE_ARGS += -sv
 
 # TOPLEVEL tells it which file is actually the top level
-TOPLEVEL = sfm_riscv_core_sv
+COCOTB_TOPLEVEL = sfm_riscv_core_sv
 # MODULE tells cocotb which file is the testbench file
-MODULE = test_riscv
+COCOTB_TEST_MODULES = test_riscv
 
 # Old line: include $(shell cocotb-config --makefiles)/Makefile.sim
 
