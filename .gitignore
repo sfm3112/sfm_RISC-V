@@ -17,3 +17,9 @@ simulation/
 *.ini
 *.bin
 *.do
+*_info
+*.qdb
+*.qpg
+*.qtl
+*_vmake
+*transcript
