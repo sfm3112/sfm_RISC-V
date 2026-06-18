@@ -5,6 +5,7 @@
 #################################################
 
 import cocotb
+import re
 from cocotb.clock import Clock
 from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
 
