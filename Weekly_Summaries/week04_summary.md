@@ -24,4 +24,5 @@ The testbench verification setup is now largely functional and outputting valid 
 Last week, it was noted that the risc-v project is well ahead of schedule. The implementation of a completely new testbench verification setup has slowed this accelerated progress significantly. Nonetheless, The original goals of the project are still expected to be met well ahead of the original three month schedule. Therefore, the current blueprint for scope expansion is as follows:
 1. Implement multiplication hardware for the RISC-V multiplication instruction set expansion
 2. Implement external communication via integrated UART encoding and decoding
+
 A note on this, these are tentative goals which are not guaranteed to be met. The goals of top priority are those associated with the baseline ISA excluding FENCE, ECALL, and EBREAK.
