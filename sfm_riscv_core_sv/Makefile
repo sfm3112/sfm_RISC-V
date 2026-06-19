@@ -1,3 +1,5 @@
+export COCOTB_IGNORE_PYTHON_REQUIRES=1
+
 # SIM tells it which simulator to launch
 SIM ?= modelsim
 # TOPLEVEL_LANG tells it which HDL the top level file is
