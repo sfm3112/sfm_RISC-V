@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1781893589" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.06048011779785156" sim_time_ns="30.0" ratio_time="496.0307799047589">
-      <failure error_type="AttributeError" error_msg="'HierarchyArrayObject' object has no attribute 'regs'" />
+    <property name="random_seed" value="1781894726" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.0632925033569336" sim_time_ns="30.0" ratio_time="473.9897840794371">
+      <failure error_type="AssertionError" error_msg="&#10;Fail on instruction: addi x1, x0, 2&#09;# x1 = 2&#10;Expected x1 = 0x2 (2)&#10;Got x1 = 0x0 (0)" />
     </testcase>
   </testsuite>
 </testsuites>
