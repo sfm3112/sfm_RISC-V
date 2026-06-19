@@ -1,7 +1,7 @@
 #################################################
 #     Created by: Stephen Meyer (6/12/2026)     #
-#	        RISC-V cocotb Test Bench            #
-#	    Copyright (C) 2026 Stephen Meyer        #
+#           RISC-V cocotb Test Bench            #
+#       Copyright (C) 2026 Stephen Meyer        #
 #################################################
 
 import cocotb
@@ -22,20 +22,20 @@ async def testA(dut):
 	
 	# Initial setup lines #
 	
-    clock = Clock(dut.clk, 10, units="ns")  #creates the clock cycle
-    cocotb.start_soon(clock.start())        #tells program to begin pulsing clock cycle, .start_soon tells it to run in the background
+	clock = Clock(dut.clk, 10, units="ns")	#creates the clock cycle
+	cocotb.start_soon(clock.start())		#tells program to begin pulsing clock cycle, .start_soon tells it to run in the background
 
-    dut.rst.value = 1
-    await ClockCycles(dut.clk, 2)  # reset for 2 clock cycles
-    dut.rst.value = 0
-    await RisingEdge(dut.clk)      # ensure its back in sync with clock cycle (since rst is an async signal)
+	dut.rst.value = 1
+	await ClockCycles(dut.clk, 2)	# reset for 2 clock cycles
+	dut.rst.value = 0
+	await RisingEdge(dut.clk)	# ensure its back in sync with clock cycle (since rst is an async signal)
 
-    # Dynamic TestBench #
-    
-    # Read the .s assembly file #
-    
-    goodOutput = []	# Creates the variable to store the good expected outputs for the test bench
-    
+	# Dynamic TestBench #
+	
+	# Read the .s assembly file #
+	
+	goodOutput = []	# Creates the variable to store the good expected outputs for the test bench
+	
 	with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
 		for line in asm:	# For loop
 			match = re.search(r"#\s*x(\d+)\s*=\s*(0x[0-9a-fA-F]+|-?\d+)", line)	# extracts the register result comment and assigns it to match (check log for specific syntax)
@@ -74,5 +74,5 @@ async def testA(dut):
 	assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
 	
 	dut._log.info("Branch test bench successful.")	# Final text printout
-    
-    pass
+	
+pass
