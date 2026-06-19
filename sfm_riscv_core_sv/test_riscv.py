@@ -56,7 +56,7 @@ async def testA(dut):
 	
 	for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 		await waitForNextIW(dut)	# rruns the function from above
-		actualVal = int(dut.DataPath.register_stage.regs[regNum].value)	# sets "actualVal" to the value stored in the designated register
+		actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 		
 		assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
 		# If the actual value in the register doesn't match the expected value, print the failed TB statement
