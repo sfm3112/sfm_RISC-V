@@ -23,3 +23,5 @@ simulation/
 *.qtl
 *_vmake
 *transcript
+*.ver
+*.pyc

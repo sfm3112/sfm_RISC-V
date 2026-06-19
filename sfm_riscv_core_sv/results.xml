@@ -1,0 +1,8 @@
+<testsuites name="results">
+  <testsuite name="all" package="all">
+    <property name="random_seed" value="1781833530" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.06516909599304199" sim_time_ns="10.0" ratio_time="153.44696512389376">
+      <failure error_type="AttributeError" error_msg="sfm_riscv_core_sv contains no child object named MC" />
+    </testcase>
+  </testsuite>
+</testsuites>
