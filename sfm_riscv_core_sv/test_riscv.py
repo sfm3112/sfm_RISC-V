@@ -12,9 +12,9 @@ from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	while int(dut.MC.value) == 0:
+	while int(dut.ControlUnit.MC.value) == 0:
 		await RisingEdge(dut.clk)
-	while int(dut.MC.value) != 0:
+	while int(dut.ControlUnit.MC.value) != 0:
 		await RisingEdge(dut.clk)
 
 @cocotb.test()
