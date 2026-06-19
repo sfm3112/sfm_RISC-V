@@ -56,7 +56,7 @@ async def testA(dut):
 	
 	for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 		await waitForNextIW(dut)	# rruns the function from above
-		actualVal = int(dut.register_file.regs[regNum].value)	# sets "actualVal" to the value stored in the designated register
+		actualVal = int(dut.DataPath.register_stage.regs[regNum].value)	# sets "actualVal" to the value stored in the designated register
 		
 		assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
 		# If the actual value in the register doesn't match the expected value, print the failed TB statement
@@ -67,8 +67,8 @@ async def testA(dut):
 		
 	await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 		
-	final_x1 = int(dut.register_file.regs[1].value)	# store final result of x1
-	final_x2 = int(dut.register_file.regs[2].value)	# store final result of x2
+	final_x1 = int(dut.DataPath.register_file.stage[1].value)	# store final result of x1
+	final_x2 = int(dut.DataPath.register_file.stage[2].value)	# store final result of x2
 		
 	assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
 	assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
