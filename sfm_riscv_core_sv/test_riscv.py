@@ -36,7 +36,7 @@ async def testA(dut):
     
     goodOutput = []	# Creates the variable to store the good expected outputs for the test bench
     
-    with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
+	with open("testSuite.s", "r") as asm:	# Reads the assembly file and creates a reference to it called "asm"
 		for line in asm:	# For loop
 			match = re.search(r"#\s*x(\d+)\s*=\s*(0x[0-9a-fA-F]+|-?\d+)", line)	# extracts the register result comment and assigns it to match (check log for specific syntax)
 			if match:
