@@ -55,7 +55,14 @@ async def testA(dut):
 	dut._log.info(f"Found {len(goodOutput)} assembly operations to run")	# printout of how long goodOutput is
 	
 	for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
-		await waitForNextIW(dut)	# rruns the function from above
+		await waitForNextIW(dut)	# runs the function from above
+		
+		aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
+		dut._log.info(f"ALU Res: {aluTb}")		# Prints the alu result for debugging
+		
+		wbMuxTb = int(dut.DataPath.WBmux.out.value)
+		dut._log.info(f"Write Back Mux: {wbMuxTb}")		# Prints the writeback mux for debugging
+		
 		actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 		
 		assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
