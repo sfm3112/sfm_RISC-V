@@ -13,10 +13,13 @@ from cocotb.utils import get_sim_time
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	while int(dut.ControlUnit.MC.value) == 0:
-		await RisingEdge(dut.clk)
+	if int(dut.ControlUnit.MC.value) == 0:
+		while int(dut.ControlUnit.MC.value) == 0:
+			await RisingEdge(dut.clk)
+			
 	while int(dut.ControlUnit.MC.value) != 0:
 		await RisingEdge(dut.clk)
+	await FallingEdge(dut.clk)
 
 @cocotb.test()
 async def testA(dut):
@@ -116,10 +119,13 @@ async def cuTracker(dut, outputFile=None):
 	}
 	
 	while True:
-		await Edge(dut.ControlUnit.MC)
+		try:
+			await Edge(dut.ControlUnit.MC)
+			currentMC = int(dut.ControlUnit.MC.value)
+			mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
 		
 		timestamp = get_sim_time(unit="ns")
-		currentMC = int(dut.ControlUnit.MC.value)
+		
 		mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
 		
 		logMsg = f"({timestamp:>6} ns) CU State Changed: {mcStr}\n"
