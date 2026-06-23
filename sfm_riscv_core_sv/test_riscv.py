@@ -122,7 +122,7 @@ async def cuTracker(dut, outputFile=None):
 		currentMC = int(dut.ControlUnit.MC.value)
 		mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
 		
-		logMsg = f"({timestamp:>6} ns) CU State Changed: {mcStr}"
+		logMsg = f"({timestamp:>6} ns) CU State Changed: {mcStr}\n"
 		
 		if currentMC in [1, 2]:
 			try:
@@ -134,5 +134,5 @@ async def cuTracker(dut, outputFile=None):
 				logMsg += " Processing Unknown type or Signals uninitialized"
 		dut._log.info(logMsg)
 		if outputFile:
-			outputFile.write(logMsg + "\n")
+			outputFile.write(logMsg + "\n\n")
 pass

@@ -29,7 +29,7 @@ localparam logic [6:0] TYPE_J  	=	7'b1101111;
 localparam logic [1:0] MC0 = 2'b00;
 localparam logic [1:0] MC1 = 2'b01;
 localparam logic [1:0] MC2 = 2'b10;
-localparam logic [1:0] MC3 = 2'b11;
+localparam logic [1:0] RESET = 2'b11;
 
 logic [1:0] MC;
 logic [1:0] next_MC;
@@ -52,7 +52,7 @@ localparam logic [2:0] NA 			= 3'd7;
 
 always_ff @(posedge clk or posedge rst) begin
     if (rst)
-        MC <= MC0;
+        MC <= RESET;
     else
         MC <= next_MC;
 end
@@ -61,14 +61,17 @@ end
 
 always_comb begin
 	case (MC)
+//----------------------------------------------------------RESET---------------------------------------------------------//
+
+		RESET : begin
+			LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
+
+
 //-----------------------------------------------------------MC0----------------------------------------------------------//	
 		MC0 : begin
 			LdPC = 1'b0; cntPC = 1'b1; LDrd = 1'b0; LdIWR = 1'b1; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC1;
 		end
 		
-//		MC1 : begin
-			//Experimenting if the "CU decodes IW" cycle is unnecessary
-//		end
 //-----------------------------------------------------------MC1----------------------------------------------------------//		
 		MC1 : begin
 		case (IW[6:0])
