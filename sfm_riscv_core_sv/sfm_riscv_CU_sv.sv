@@ -65,7 +65,7 @@ always_comb begin
 
 		RESET : begin
 			LdPC = 1'b0; cntPC = 1'b0; LDrd = 1'b0; LdIWR = 1'b0; WBsel = NA; LdMAB = 1'b0; LdMAX = 1'b0; pR_W = 1'b0; dR_W = 1'b0; LdOPDR = 1'b0; next_MC = MC0;
-
+		end
 
 //-----------------------------------------------------------MC0----------------------------------------------------------//	
 		MC0 : begin
