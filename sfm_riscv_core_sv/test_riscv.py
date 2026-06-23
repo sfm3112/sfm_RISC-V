@@ -63,7 +63,7 @@ async def testA(dut):
 		InstWordTb = int(dut.DataPath.IWRreg.Q.value)
 		aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
 		wbMuxTb = int(dut.DataPath.WBmux.out.value)
-		wbMuxSelTb = int(dut.DataPath.WBmux.sel.value)
+		wbMuxSelTb = int(dut.DataPath.WBmux.Sel.value)
 		wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
 		actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 		
