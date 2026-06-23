@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1782237069" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.03764033317565918" sim_time_ns="30.0" ratio_time="797.0173871733966">
-      <failure error_type="ValueError" error_msg="I/O operation on closed file." />
+    <property name="random_seed" value="1782237533" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.06111907958984375" sim_time_ns="30.0" ratio_time="490.84508800399453">
+      <failure error_type="AttributeError" error_msg="'_io.TextIOWrapper' object has no attribute 'wirte'" />
     </testcase>
   </testsuite>
 </testsuites>
