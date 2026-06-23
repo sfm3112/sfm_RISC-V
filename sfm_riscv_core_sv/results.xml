@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1782163537" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.06098628044128418" sim_time_ns="30.0" ratio_time="491.9139154400985">
-      <failure error_type="AssertionError" error_msg="&#10;Fail on instruction: addi x1, x0, 2&#09;# x1 = 2&#10;Expected x1 = 0x2 (2)&#10;Got x1 = 0x0 (0)" />
+    <property name="random_seed" value="1782176476" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="20" time="0.06024932861328125" sim_time_ns="30.0" ratio_time="497.9308598201849">
+      <failure error_type="AttributeError" error_msg="sfm_riscv_core_sv.DataPath.WBmux contains no child object named sel" />
     </testcase>
   </testsuite>
 </testsuites>
