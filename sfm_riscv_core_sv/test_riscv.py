@@ -22,7 +22,7 @@ async def testA(dut):
 	
 	# Initial setup lines #
 	
-	clock = Clock(dut.clk, 10, units="ns")	#creates the clock cycle
+	clock = Clock(dut.clk, 10, unit="ns")	#creates the clock cycle
 	cocotb.start_soon(clock.start())		#tells program to begin pulsing clock cycle, .start_soon tells it to run in the background
 
 	dut.rst.value = 1
