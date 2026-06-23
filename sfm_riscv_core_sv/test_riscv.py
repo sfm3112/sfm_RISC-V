@@ -24,12 +24,12 @@ async def testA(dut):
 	
 	clock = Clock(dut.clk, 10, unit="ns")	#creates the clock cycle
 	cocotb.start_soon(clock.start())		#tells program to begin pulsing clock cycle, .start_soon tells it to run in the background
-
+	
 	dut.rst.value = 1
 	await ClockCycles(dut.clk, 2)	# reset for 2 clock cycles
 	dut.rst.value = 0
 	await RisingEdge(dut.clk)	# ensure its back in sync with clock cycle (since rst is an async signal)
-
+	
 	# Dynamic TestBench #
 	
 	# Read the .s assembly file #
@@ -56,44 +56,44 @@ async def testA(dut):
 	
 	with open("riscv_debug_tb.txt", "w") as riscvTb:
 		riscvTb.write("### RISC-V Test Bench Debug Log ###\n\n")
+		
+		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
+			await waitForNextIW(dut)	# runs the function from above
+			
+			InstWordTb = int(dut.DataPath.IWRreg.Q.value)
+			aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
+			wbMuxTb = int(dut.DataPath.WBmux.out.value)
+			wbMuxSelTb = int(dut.DataPath.WBmux.Sel.value)
+			wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
+			actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
+			
+			# riscvTb writes:
+			
+			riscvTb.write(f"Current assembly instruction is: {originalLine}\n")
+			riscvTb.write(f"Instruction Word: {hex(InstWordTb)}\n")
+			riscvTb.write(f"ALU result: {aluTb}\n")
+			riscvTb.write(f"Write Back Mux Select: {wbMuxSelTb}\n")
+			riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
+			riscvTb.wirte(f"Register Load Decoder select: {WbDecoderSel}\n")
+			riscvTb.write(f"EXPECTED RESULT: x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
+			riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
+			
+			# cocotb error statement:
+			assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
+			# If the actual value in the register doesn't match the expected value, print the failed TB statement
+			
+			dut._log.info("General test bench completed successfully.")	# Text printout
+			
+			dut._log.info("Testing branch loop.")	# Text printout
+			
+			await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
+			
+		final_x1 = int(dut.DataPath.register_file.stage[1].value)	# store final result of x1
+		final_x2 = int(dut.DataPath.register_file.stage[2].value)	# store final result of x2
+		
+		assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
+		assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
 	
-	for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
-		await waitForNextIW(dut)	# runs the function from above
-		
-		InstWordTb = int(dut.DataPath.IWRreg.Q.value)
-		aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
-		wbMuxTb = int(dut.DataPath.WBmux.out.value)
-		wbMuxSelTb = int(dut.DataPath.WBmux.Sel.value)
-		wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
-		actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
-		
-		# riscvTb writes:
-		
-		riscvTb.write(f"Current assembly instruction is: {originalLine}\n")
-		riscvTb.write(f"Instruction Word: {hex(InstWordTb)}\n")
-		riscvTb.write(f"ALU result: {aluTb}\n")
-		riscvTb.write(f"Write Back Mux Select: {wbMuxSelTb}\n")
-		riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
-		riscvTb.wirte(f"Register Load Decoder select: {WbDecoderSel}\n")
-		riscvTb.write(f"EXPECTED RESULT: x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
-		riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
-		
-		# cocotb error statement:
-		assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
-		# If the actual value in the register doesn't match the expected value, print the failed TB statement
-		
-		dut._log.info("General test bench completed successfully.")	# Text printout
-		
-	dut._log.info("Testing branch loop.")	# Text printout
-		
-	await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
-		
-	final_x1 = int(dut.DataPath.register_file.stage[1].value)	# store final result of x1
-	final_x2 = int(dut.DataPath.register_file.stage[2].value)	# store final result of x2
-		
-	assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
-	assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
-	
-	dut._log.info("Branch test bench successful.")	# Final text printout
+		dut._log.info("Branch test bench successful.")	# Final text printout
 	
 pass
