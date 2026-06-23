@@ -119,15 +119,14 @@ async def cuTracker(dut, outputFile=None):
 	}
 	
 	while True:
+		await Edge(dut.ControlUnit.MC)
 		try:
-			await Edge(dut.ControlUnit.MC)
 			currentMC = int(dut.ControlUnit.MC.value)
 			mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
+		except ValueError:
+			continue
 		
 		timestamp = get_sim_time(unit="ns")
-		
-		mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
-		
 		logMsg = f"({timestamp:>6} ns) CU State Changed: {mcStr}\n"
 		
 		if currentMC in [1, 2]:
