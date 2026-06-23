@@ -9,7 +9,7 @@
 
 // WIDTH left undefined here so it must take the WIDTH defined in core, else compile error.                   NOT COMPLETED
 module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, output logic [2:0]CNZres, input logic [2:0]WBsel, input logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR,
-									output logic OPD);
+									output logic [WIDTH-1:0]OPD);
 	
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
 

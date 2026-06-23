@@ -73,7 +73,7 @@ async def testA(dut):
 			wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
 			actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 			
-			# riscvTb writes:
+			# RiscvTb writes:
 			
 			riscvTb.write(f"Current assembly instruction is: {originalLine}\n")
 			riscvTb.write(f"Instruction Word: {hex(InstWordTb)}\n")
