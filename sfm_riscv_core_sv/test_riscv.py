@@ -7,7 +7,8 @@
 import cocotb
 import re
 from cocotb.clock import Clock
-from cocotb.triggers import FallingEdge, RisingEdge, ClockCycles, Timer
+from cocotb.triggers import Edge, FallingEdge, RisingEdge, ClockCycles, Timer
+from cocotb.utils import get_sim_time
 
 # Function to check for MC0 #
 
@@ -57,6 +58,8 @@ async def testA(dut):
 	with open("riscv_debug_tb.txt", "w") as riscvTb:
 		riscvTb.write("### RISC-V Test Bench Debug Log ###\n\n")
 		
+		cocotb.start_soon(cuTracker(dut, outputFile=riscvTb))
+		
 		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 			await waitForNextIW(dut)	# runs the function from above
 			
@@ -96,4 +99,40 @@ async def testA(dut):
 	
 		dut._log.info("Branch test bench successful.")	# Final text printout
 	
+
+async def cuTracker(dut, outputFile=None):
+	MCnames = {0: "MC0", 1: "MC1", 2: "MC2"}
+	
+	opcodes = {
+		int(dut.ControlUnit.TYPE_R.value): "TYPE_R",
+		int(dut.ControlUnit.TYPE_I.value): "TYPE_I",
+		int(dut.ControlUnit.TYPE_L.value): "TYPE_L",
+		int(dut.ControlUnit.TYPE_JR.value): "TYPE_JR",
+		int(dut.ControlUnit.TYPE_S.value): "TYPE_S",
+		int(dut.ControlUnit.TYPE_B.value): "TYPE_B",
+		int(dut.ControlUnit.TYPE_UI.value): "TYPE_UI",
+		int(dut.ControlUnit.TYPE_UPC.value): "TYPE_UPC",
+		int(dut.ControlUnit.TYPE_J.value): "TYPE_J"
+	}
+	
+	while True:
+		await Edge(dut.ControlUnit.MC)
+		
+		timestamp = get_sim_time(unit="ns")
+		currentMC = int(dut.ControlUnit.MC.value)
+		mcStr = MCnames.get(currentMC, f"MC{currentMC} (Unknown Error)")
+		
+		logMsg = f"({timestamp:>6} ns) CU State Changed: {mcStr}"
+		
+		if currentMC in [1, 2]:
+			try:
+				rawIw = int(dut.ControlUnit.IW.value)
+				opCode = rawIw & 0x7F
+				opType = opcodes.get(opCode, f"Unknown Opcode (0x{opCode:02x})")
+				logMsg += f" Processing {opType}"
+			except ValueError:
+				logMsg += " Processing Unknown type or Signals uninitialized"
+		dut._log.info(logMsg)
+		if outputFile:
+			outputFile.write(logMsg + "\n")
 pass
