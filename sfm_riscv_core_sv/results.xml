@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1782240840" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="21" time="0.05420637130737305" sim_time_ns="30.0" ratio_time="553.4404771329797">
-      <failure error_type="AssertionError" error_msg="&#10;Fail on instruction: addi x1, x0, 2&#09;# x1 = 2&#10;Expected x1 = 0x2 (2)&#10;Got x1 = 0x0 (0)" />
+    <property name="random_seed" value="1782243481" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="24" time="0.05833911895751953" sim_time_ns="25.0" ratio_time="428.5289261602341">
+      <failure error_type="ValueError" error_msg="Can't convert LogicArray to int: it contains non-0/1 values" />
     </testcase>
   </testsuite>
 </testsuites>
