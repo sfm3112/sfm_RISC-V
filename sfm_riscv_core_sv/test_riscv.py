@@ -74,7 +74,7 @@ async def testA(dut):
 			riscvTb.write(f"ALU result: {aluTb}\n")
 			riscvTb.write(f"Write Back Mux Select: {wbMuxSelTb}\n")
 			riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
-			riscvTb.wirte(f"Register Load Decoder select: {WbDecoderSel}\n")
+			riscvTb.write(f"Register Load Decoder select: {wbDecoderSel}\n")
 			riscvTb.write(f"EXPECTED RESULT: x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
 			riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
 			
