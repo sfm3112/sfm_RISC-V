@@ -54,17 +54,31 @@ async def testA(dut):
 	
 	dut._log.info(f"Found {len(goodOutput)} assembly operations to run")	# printout of how long goodOutput is
 	
+	with open("riscv_debug_tb.txt", "w") as riscvTb:
+		riscvTb.write("### RISC-V Test Bench Debug Log ###\n\n")
+	
 	for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 		await waitForNextIW(dut)	# runs the function from above
 		
+		InstWordTb = int(dut.DataPath.IWRreg.Q.value)
 		aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
-		dut._log.info(f"ALU Res: {aluTb}")		# Prints the alu result for debugging
-		
 		wbMuxTb = int(dut.DataPath.WBmux.out.value)
-		dut._log.info(f"Write Back Mux: {wbMuxTb}")		# Prints the writeback mux for debugging
-		
+		wbMuxSelTb = int(dut.DataPath.WBmux.sel.value)
+		wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
 		actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 		
+		# riscvTb writes:
+		
+		riscvTb.write(f"Current assembly instruction is: {originalLine}\n")
+		riscvTb.write(f"Instruction Word: {hex(InstWordTb)}\n")
+		riscvTb.write(f"ALU result: {aluTb}\n")
+		riscvTb.write(f"Write Back Mux Select: {wbMuxSelTb}\n")
+		riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
+		riscvTb.wirte(f"Register Load Decoder select: {WbDecoderSel}\n")
+		riscvTb.write(f"EXPECTED RESULT: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
+		riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
+		
+		# cocotb error statement:
 		assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
 		# If the actual value in the register doesn't match the expected value, print the failed TB statement
 		
