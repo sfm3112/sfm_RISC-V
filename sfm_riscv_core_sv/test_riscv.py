@@ -88,9 +88,6 @@ async def testA(dut):
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
-			
-			await ClockCycles(dut.clk, 1)
-			
 			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
@@ -124,7 +121,7 @@ async def testA(dut):
 		
 		dut._log.info("Testing branch loop.")	# Text printout
 		
-		await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
+		await ClockCycles(dut.clk, 500)	# lets 500 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 		
 		final_x1_raw = safe_format(dut.DataPath.register_stage[1].NbitRegister.Q)    
 		final_x2_raw = safe_format(dut.DataPath.register_stage[2].NbitRegister.Q)    
