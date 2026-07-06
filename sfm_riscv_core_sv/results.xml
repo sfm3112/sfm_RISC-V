@@ -1,8 +1,8 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1783358273" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="40" time="0.10219764709472656" sim_time_ns="1960.0" ratio_time="19178.52373042683">
-      <failure error_type="AttributeError" error_msg="sfm_riscv_core_sv.DataPath contains no child object named register_file" />
+    <property name="random_seed" value="1783360968" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="40" time="0.08695697784423828" sim_time_ns="1970.0" ratio_time="22654.881170419278">
+      <failure error_type="AssertionError" error_msg="Branch Loop Failed: x1 expected 337, got 737" />
     </testcase>
   </testsuite>
 </testsuites>
