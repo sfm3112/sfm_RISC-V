@@ -84,11 +84,11 @@ async def testA(dut):
 			await waitForNextIW(dut)	# runs the function from above
 			
 			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
-			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres., as_hex=True)
+			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres, as_hex=True)
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
-			actualVal = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
+			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
 			
@@ -118,23 +118,29 @@ async def testA(dut):
 					dut._log.info(f"Instruction passed: {originalLine}")
 			
 			# cocotb error statement:
-			assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
+			#assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
 			# If the actual value in the register doesn't match the expected value, print the failed TB statement
 			
-			assert errors_found == 0, f"Simulation finished with {errors_found} errors logged in riscv_debug_tb.txt"
-			dut._log.info("Branch test bench successful.")
+			#assert errors_found == 0, f"Simulation finished with {errors_found} errors logged in riscv_debug_tb.txt"
+			#dut._log.info("Branch test bench successful.")
 			
 			dut._log.info("Testing branch loop.")	# Text printout
 			
 			await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 			
-		final_x1 = safe_format(dut.DataPath.register_file.stage[1].value)	# store final result of x1
-		final_x2 = safe_format(dut.DataPath.register_file.stage[2].value)	# store final result of x2
+		final_x1_raw = safe_format(dut.DataPath.register_file.stage[1])    
+		final_x2_raw = safe_format(dut.DataPath.register_file.stage[2])    
 		
-		assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
-		assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
-	
-		dut._log.info("Branch test bench successful.")	# Final text printout
+		# Handle if they are uninitialized at the end
+		assert final_x1_raw != "XXXX", "Branch Loop Failed: x1 is uninitialized"
+		assert final_x2_raw != "XXXX", "Branch Loop Failed: x2 is uninitialized"
+		
+		assert int(final_x1_raw) == 337, f"Branch Loop Failed: x1 expected 337, got {final_x1_raw}"
+		assert int(final_x2_raw) == 337, f"Branch Loop Failed: x2 expected 337, got {final_x2_raw}"
+		
+		# NOW put your final gatekeeper check here at the absolute end of testA:
+		assert errors_found == 0, f"Simulation finished with {errors_found} errors logged in riscv_debug_tb.txt"
+		dut._log.info("Branch test bench successful.")
 	
 
 async def cuTracker(dut, outputFile=None):
