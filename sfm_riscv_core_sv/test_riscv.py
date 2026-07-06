@@ -29,11 +29,12 @@ def safe_format(signal, as_hex=False):
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	if int(dut.ControlUnit.MC.value) == 0:
-		while int(dut.ControlUnit.MC.value) == 0:
-			await RisingEdge(dut.clk)
-			
-	while int(dut.ControlUnit.MC.value) != 0:
+	while True:
+		try:
+			if int(dut.ControlUnit.MC.value) == 2:
+				break
+		except ValueError:
+			pass
 		await RisingEdge(dut.clk)
 	await FallingEdge(dut.clk)
 
@@ -81,13 +82,16 @@ async def testA(dut):
 		cocotb.start_soon(cuTracker(dut, outputFile=riscvTb))
 		
 		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
-			await waitForNextIW(dut)	# runs the function from above
+			await waitForNextIW(dut)	# runs the function from above Now goes to MC2
 			
 			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
 			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres, as_hex=True)
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
+			
+			await ClockCycles(dut.clk, 1)
+			
 			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
