@@ -29,13 +29,19 @@ def safe_format(signal, as_hex=False):
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	if int(dut.ControlUnit.MC.value) == 0:
-		while int(dut.ControlUnit.MC.value) == 0:
-			await RisingEdge(dut.clk)
-			
-	while int(dut.ControlUnit.MC.value) != 0:
+	
+	#if int(dut.ControlUnit.MC.value) == 0:
+	#	while int(dut.ControlUnit.MC.value) == 0:
+	#		await RisingEdge(dut.clk)
+	#		
+	#while int(dut.ControlUnit.MC.value) != 0:
+	#	await RisingEdge(dut.clk)
+	#await FallingEdge(dut.clk)
+	while int(dut.ControlUnit.LDrd.value) == 0:
 		await RisingEdge(dut.clk)
+		
 	await FallingEdge(dut.clk)
+	
 
 @cocotb.test()
 async def testA(dut):
@@ -88,9 +94,6 @@ async def testA(dut):
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
-			
-			await ClockCycles(dut.clk, 1)
-			
 			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
