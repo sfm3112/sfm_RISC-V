@@ -29,12 +29,11 @@ def safe_format(signal, as_hex=False):
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	while True:
-		try:
-			if int(dut.ControlUnit.MC.value) == 2:
-				break
-		except ValueError:
-			pass
+	if int(dut.ControlUnit.MC.value) == 2:
+		while int(dut.ControlUnit.MC.value) == 2:
+			await RisingEdge(dut.clk)
+			
+	while int(dut.ControlUnit.MC.value) != 2:
 		await RisingEdge(dut.clk)
 	await FallingEdge(dut.clk)
 
@@ -82,7 +81,7 @@ async def testA(dut):
 		cocotb.start_soon(cuTracker(dut, outputFile=riscvTb))
 		
 		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
-			await waitForNextIW(dut)	# runs the function from above Now goes to MC2
+			await waitForNextIW(dut)	# runs the function from above
 			
 			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
 			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres, as_hex=True)
@@ -125,7 +124,7 @@ async def testA(dut):
 		
 		dut._log.info("Testing branch loop.")	# Text printout
 		
-		await ClockCycles(dut.clk, 500)	# lets 500 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
+		await ClockCycles(dut.clk, 500)	# lets  clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 		
 		final_x1_raw = safe_format(dut.DataPath.register_stage[1].NbitRegister.Q)    
 		final_x2_raw = safe_format(dut.DataPath.register_stage[2].NbitRegister.Q)    
