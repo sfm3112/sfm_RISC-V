@@ -16,7 +16,7 @@ def safe_format(signal, as_hex=False):
     #Returns an integer or hex string if valid, or 'XX' / '0xXXXX' if uninitialized.
     
     # Get the raw string representation (e.g., "10110xx1")
-    raw_str = signal.value.binstr.lower()
+    raw_str = str(signal.value).lower()
     
     # Check if there are any uninitialized or tristate bits
     if any(char in raw_str for char in ['x', 'z', 'u']):
@@ -93,12 +93,12 @@ async def testA(dut):
 			# RiscvTb writes:
 			
 			riscvTb.write(f"Current assembly instruction is: {originalLine}\n")
-			riscvTb.write(f"Instruction Word: {hex(InstWordTb)}\n")
+			riscvTb.write(f"Instruction Word: {InstWordTb}\n")
 			riscvTb.write(f"ALU result: {aluTb}\n")
 			riscvTb.write(f"Write Back Mux Select: {wbMuxSelTb}\n")
 			riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
 			riscvTb.write(f"Register Load Decoder select: {wbDecoderSel}\n")
-			riscvTb.write(f"EXPECTED RESULT: x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
+			riscvTb.write(f"EXPECTED RESULT: x{regNum} = {expectedVal} ({expectedVal})\n")
 			#riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
 			
 			# Handle uninitialized display and testing
@@ -117,17 +117,12 @@ async def testA(dut):
 				else:
 					dut._log.info(f"Instruction passed: {originalLine}")
 			
-			# cocotb error statement:
-			#assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
-			# If the actual value in the register doesn't match the expected value, print the failed TB statement
-			
-			#assert errors_found == 0, f"Simulation finished with {errors_found} errors logged in riscv_debug_tb.txt"
 			#dut._log.info("Branch test bench successful.")
-			
-			dut._log.info("Testing branch loop.")	# Text printout
-			
-			await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
-			
+		
+		dut._log.info("Testing branch loop.")	# Text printout
+		
+		await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
+		
 		final_x1_raw = safe_format(dut.DataPath.register_file.stage[1])    
 		final_x2_raw = safe_format(dut.DataPath.register_file.stage[2])    
 		
