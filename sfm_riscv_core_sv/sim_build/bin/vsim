@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/stephen/intelFPGA/18.1/modelsim_ase/linux/vish "$@"
