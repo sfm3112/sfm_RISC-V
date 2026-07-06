@@ -71,6 +71,7 @@ async def testA(dut):
 				goodOutput.append((regNum, val, line.strip()))	# sticks on the end of goodOutput the register number, the expected value, and the assembly line stripped of newline characters
 				
 	# Run the loop #
+	errors_found = 0	#Not actually indicictive of errors, just lets the whole thing run through
 	
 	dut._log.info(f"Found {len(goodOutput)} assembly operations to run")	# printout of how long goodOutput is
 	
@@ -82,12 +83,12 @@ async def testA(dut):
 		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 			await waitForNextIW(dut)	# runs the function from above
 			
-			InstWordTb = safe_format(dut.DataPath.IWRreg.Q.value)
-			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
-			wbMuxTb = safe_format(dut.DataPath.WBmux.out.value)
-			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel.value)
-			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel.value)
-			actualVal = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
+			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
+			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres., as_hex=True)
+			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
+			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
+			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
+			actualVal = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
 			
@@ -98,13 +99,30 @@ async def testA(dut):
 			riscvTb.write(f"Write Back Mux output: {wbMuxTb}\n")
 			riscvTb.write(f"Register Load Decoder select: {wbDecoderSel}\n")
 			riscvTb.write(f"EXPECTED RESULT: x{regNum} = {hex(expectedVal)} ({expectedVal})\n")
-			riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
+			#riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n")
+			
+			# Handle uninitialized display and testing
+			if actualValRaw == "XXXX":
+				riscvTb.write(f"ACTUAL RESULT: x{regNum} = 0xXXXX (XXXX)\n\n")
+				dut._log.error(f"Fail on instruction: {originalLine} -> Got uninitialized value (XXXX)")
+				errors_found += 1  # Increment instead of asserting
+			else:
+				actualVal = int(actualValRaw)
+				riscvTb.write(f"ACTUAL RESULT: x{regNum} = {hex(actualVal)} ({actualVal})\n\n")
+				
+				# Check value match without crashing the script
+				if actualVal != expectedVal:
+					dut._log.error(f"Fail on instruction: {originalLine} -> Expected {hex(expectedVal)}, Got {hex(actualVal)}")
+					errors_found += 1  # Increment instead of asserting
+				else:
+					dut._log.info(f"Instruction passed: {originalLine}")
 			
 			# cocotb error statement:
 			assert actualVal == expectedVal, (f"\nFail on instruction: {originalLine}\n" f"Expected x{regNum} = {hex(expectedVal)} ({expectedVal})\n" f"Got x{regNum} = {hex(actualVal)} ({actualVal})" )
 			# If the actual value in the register doesn't match the expected value, print the failed TB statement
 			
-			dut._log.info("General test bench completed successfully.")	# Text printout
+			assert errors_found == 0, f"Simulation finished with {errors_found} errors logged in riscv_debug_tb.txt"
+			dut._log.info("Branch test bench successful.")
 			
 			dut._log.info("Testing branch loop.")	# Text printout
 			
