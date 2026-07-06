@@ -1,8 +1,13 @@
 # SIM tells it which simulator to launch
 SIM ?= modelsim
 
-# Used for Linux version ModelSim
-VSIM_BIN = /home/stephen/intelFPGA/18.1/modelsim_ase/linux/vish
+ARCH = i686
+export COCOTB_SIM_BITNESS = 32
+
+# Create a local bin wrapper so cocotb calls vish instead of looping
+export PATH := $(shell pwd)/sim_build/bin:$(PATH)
+
+$(shell mkdir -p sim_build/bin && echo '#!/bin/sh' > sim_build/bin/vsim && echo 'exec /home/stephen/intelFPGA/18.1/modelsim_ase/linux/vish "$$@"' >> sim_build/bin/vsim && chmod +x sim_build/bin/vsim)
 
 # TOPLEVEL_LANG tells it which HDL the top level file is
 TOPLEVEL_LANG = verilog
@@ -36,5 +41,14 @@ COCOTB_TEST_MODULES = test_riscv
 # Old line: include $(shell cocotb-config --makefiles)/Makefile.sim
 
 # New Line:
-COCOTB_MAKEFILES_DIR = $(shell cygpath -u $(shell cocotb-config --makefiles))
+#COCOTB_MAKEFILES_DIR = $(shell cygpath -u $(shell cocotb-config --makefiles))
+#include $(COCOTB_MAKEFILES_DIR)/Makefile.sim
+
+# If cygpath exists (Windows/MSYS2), use it. Otherwise (Linux), use cocotb-config directly.
+ifneq ($(shell which cygpath 2>/dev/null),)
+    COCOTB_MAKEFILES_DIR = $(shell cygpath -u $(shell cocotb-config --makefiles))
+else
+    COCOTB_MAKEFILES_DIR = $(shell cocotb-config --makefiles)
+endif
+
 include $(COCOTB_MAKEFILES_DIR)/Makefile.sim
