@@ -10,6 +10,22 @@ from cocotb.clock import Clock
 from cocotb.triggers import Edge, FallingEdge, RisingEdge, ClockCycles, Timer
 from cocotb.utils import get_sim_time
 
+def safe_format(signal, as_hex=False):
+    
+    #Safely reads a cocotb signal. 
+    #Returns an integer or hex string if valid, or 'XX' / '0xXXXX' if uninitialized.
+    
+    # Get the raw string representation (e.g., "10110xx1")
+    raw_str = signal.value.binstr.lower()
+    
+    # Check if there are any uninitialized or tristate bits
+    if any(char in raw_str for char in ['x', 'z', 'u']):
+        return "0xXXXX" if as_hex else "XXXX"
+    
+    # If all bits are valid 0s and 1s, convert normally
+    val = int(signal.value)
+    return f"0x{val:X}" if as_hex else val
+
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
@@ -66,12 +82,12 @@ async def testA(dut):
 		for regNum, expectedVal, originalLine in goodOutput:	# unpacks goodOutput
 			await waitForNextIW(dut)	# runs the function from above
 			
-			InstWordTb = int(dut.DataPath.IWRreg.Q.value)
-			aluTb = int(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
-			wbMuxTb = int(dut.DataPath.WBmux.out.value)
-			wbMuxSelTb = int(dut.DataPath.WBmux.Sel.value)
-			wbDecoderSel = int(dut.DataPath.WriteBackDecoder.DECsel.value)
-			actualVal = int(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
+			InstWordTb = safe_format(dut.DataPath.IWRreg.Q.value)
+			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres.value)
+			wbMuxTb = safe_format(dut.DataPath.WBmux.out.value)
+			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel.value)
+			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel.value)
+			actualVal = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q.value)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
 			
@@ -94,8 +110,8 @@ async def testA(dut):
 			
 			await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 			
-		final_x1 = int(dut.DataPath.register_file.stage[1].value)	# store final result of x1
-		final_x2 = int(dut.DataPath.register_file.stage[2].value)	# store final result of x2
+		final_x1 = safe_format(dut.DataPath.register_file.stage[1].value)	# store final result of x1
+		final_x2 = safe_format(dut.DataPath.register_file.stage[2].value)	# store final result of x2
 		
 		assert final_x1 == 337, f"Branch Loop Filed: x1 expected 337, got {final_x1}"
 		assert final_x2 == 337, f"Branch Loop Filed: x2 expected 337, got {final_x2}"
