@@ -88,6 +88,9 @@ async def testA(dut):
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
+			
+			await ClockCycles(dut.clk, 1)
+			
 			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)	# sets "actualVal" to the value stored in the designated register
 			
 			# RiscvTb writes:
