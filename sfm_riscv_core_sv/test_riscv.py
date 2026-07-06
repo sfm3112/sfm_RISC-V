@@ -29,11 +29,11 @@ def safe_format(signal, as_hex=False):
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
-	if int(dut.ControlUnit.MC.value) == 2:
-		while int(dut.ControlUnit.MC.value) == 2:
+	if int(dut.ControlUnit.MC.value) == 0:
+		while int(dut.ControlUnit.MC.value) == 0:
 			await RisingEdge(dut.clk)
 			
-	while int(dut.ControlUnit.MC.value) != 2:
+	while int(dut.ControlUnit.MC.value) != 0:
 		await RisingEdge(dut.clk)
 	await FallingEdge(dut.clk)
 
