@@ -1,5 +1,9 @@
 # SIM tells it which simulator to launch
 SIM ?= modelsim
+
+# Used for Linux version ModelSim
+VSIM_BIN = /home/stephen/intelFPGA/18.1/modelsim_ase/linux/vish
+
 # TOPLEVEL_LANG tells it which HDL the top level file is
 TOPLEVEL_LANG = verilog
 
