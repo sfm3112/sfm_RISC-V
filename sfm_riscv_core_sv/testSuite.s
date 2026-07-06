@@ -19,7 +19,7 @@ _startTests:
 	xori x3, x2, 1	# x3 = 2
 	ori x3, x2, 1	# x3 = 3
 	andi x3, x2, 1	# x3 = 1
-	slli x3, x1, 20	# x3 = 0x00020000 (2,097,152)
+	slli x3, x1, 20	# x3 = 0x00200000 (2,097,152)
 	srli x3, x1, 0	# x3 = 2
 	srai x3, x4, 1	# x3 = 0xFFFFFFFD (-3)
 	
