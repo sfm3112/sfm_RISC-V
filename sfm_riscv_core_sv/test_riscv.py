@@ -123,8 +123,8 @@ async def testA(dut):
 		
 		await ClockCycles(dut.clk, 150)	# lets 150 clock cycles pass, program ends, to check the final result of the x1 and x2 registers
 		
-		final_x1_raw = safe_format(dut.DataPath.register_file.stage[1])    
-		final_x2_raw = safe_format(dut.DataPath.register_file.stage[2])    
+		final_x1_raw = safe_format(dut.DataPath.register_stage[1].NbitRegister.Q)    
+		final_x2_raw = safe_format(dut.DataPath.register_stage[2].NbitRegister.Q)    
 		
 		# Handle if they are uninitialized at the end
 		assert final_x1_raw != "XXXX", "Branch Loop Failed: x1 is uninitialized"
