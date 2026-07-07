@@ -11,37 +11,37 @@ from cocotb.triggers import Edge, FallingEdge, RisingEdge, ClockCycles, Timer
 from cocotb.utils import get_sim_time
 
 def safe_format(signal, as_hex=False):
-    
-    #Safely reads a cocotb signal. 
-    #Returns an integer or hex string if valid, or 'XX' / '0xXXXX' if uninitialized.
-    
-    # Get the raw string representation (e.g., "10110xx1")
-    raw_str = str(signal.value).lower()
-    
-    # Check if there are any uninitialized or tristate bits
-    if any(char in raw_str for char in ['x', 'z', 'u']):
-        return "0xXXXX" if as_hex else "XXXX"
-    
-    # If all bits are valid 0s and 1s, convert normally
-    val = int(signal.value)
-    return f"0x{val:X}" if as_hex else val
+	
+	#Safely reads a cocotb signal. 
+	#Returns an integer or hex string if valid, or 'XX' / '0xXXXX' if uninitialized.
+	
+	# Get the raw string representation (e.g., "10110xx1")
+	raw_str = str(signal.value).lower()
+	
+	# Check if there are any uninitialized or tristate bits
+	if any(char in raw_str for char in ['x', 'z', 'u']):
+		return "0xXXXX" if as_hex else "XXXX"
+	
+	# If all bits are valid 0s and 1s, convert normally
+	val = int(signal.value)
+	return f"0x{val:X}" if as_hex else val
 
 # Function to check for MC0 #
 
 async def waitForNextIW(dut):
 	
-	#if int(dut.ControlUnit.MC.value) == 0:
-	#	while int(dut.ControlUnit.MC.value) == 0:
-	#		await RisingEdge(dut.clk)
-	#		
-	#while int(dut.ControlUnit.MC.value) != 0:
-	#	await RisingEdge(dut.clk)
+	#while int(dut.ControlUnit.LDrd.value) == 0:
+		#await RisingEdge(dut.clk)
+		
 	#await FallingEdge(dut.clk)
-	while int(dut.ControlUnit.LDrd.value) == 0:
+	
+	if int(dut.ControlUnit.MC.value) == 2:
+		await RisingEdge(dut.clk)
+		
+	while int(dut.ControlUnit.MC.value) != 2:
 		await RisingEdge(dut.clk)
 		
 	await FallingEdge(dut.clk)
-	
 
 @cocotb.test()
 async def testA(dut):
