@@ -30,18 +30,18 @@ def safe_format(signal, as_hex=False):
 
 async def waitForNextIW(dut):
 	
-	#while int(dut.ControlUnit.LDrd.value) == 0:
-		#await RisingEdge(dut.clk)
-		
-	#await FallingEdge(dut.clk)
-	
-	if int(dut.ControlUnit.MC.value) == 2:
-		await RisingEdge(dut.clk)
-		
-	while int(dut.ControlUnit.MC.value) != 2:
+	while int(dut.ControlUnit.LDrd.value) == 0:
 		await RisingEdge(dut.clk)
 		
 	await FallingEdge(dut.clk)
+	
+	#if int(dut.ControlUnit.MC.value) == 2:
+	#	await RisingEdge(dut.clk)
+		
+	#while int(dut.ControlUnit.MC.value) != 2:
+	#	await RisingEdge(dut.clk)
+		
+	#await FallingEdge(dut.clk)
 
 @cocotb.test()
 async def testA(dut):

@@ -60,7 +60,7 @@ assign XORres = intA ^ intB;
 always_comb begin
 	unique case (add_sub) //unsure about this input, watch for bugs
 		1'b0 : SrlSraRes = intA >> intB[4:0];
-		1'b1 : SrlSraRes = $signed(intA) >>> intB[4:0];
+		1'b1 : SrlSraRes = $unsigned($signed(intA) >>> intB[4:0]);
 		default : SrlSraRes = '0;
 	endcase
 end
