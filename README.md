@@ -68,9 +68,8 @@ Design Docs
 
 * [Design documentation](/Design_Docs)
 
-Logs and Notes
+Weekly Summaries
 
-* [Daily Logs](/Daily_Logs)
 * [Weekly Summaries](/Weekly_Summaries)
 
 ## Supported Instructions
