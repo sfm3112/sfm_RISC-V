@@ -7,7 +7,7 @@
 
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]intA, intB, input logic [2:0]Func3, input logic add_sub, output logic [WIDTH-1:0]ALUres, output logic [2:0]CNZres);
+module sfm_riscv_ALU_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]intA, intB, input logic [2:0]Func3, input logic add_sub, SHsel, output logic [WIDTH-1:0]ALUres, output logic [2:0]CNZres);
 
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
 
@@ -58,7 +58,7 @@ assign XORres = intA ^ intB;
 /////////////////////////////////////////////////////////SrlSraRes//////////////////////////////////////////////////////////
 
 always_comb begin
-	unique case (add_sub) //unsure about this input, watch for bugs
+	unique case (SHsel) //unsure about this input, watch for bugs
 		1'b0 : SrlSraRes = intA >> intB[4:0];
 		1'b1 : SrlSraRes = $unsigned($signed(intA) >>> intB[4:0]);
 		default : SrlSraRes = '0;

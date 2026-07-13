@@ -27,7 +27,7 @@ _startTests:
 	addi x2, x0, 345	# x2 = 345
 _startBranchTests:
 	beq x1, x2, _done	# if x1 = x2, jump to _done
-	blt x1, x2, _isLT	# if x1 < x2, jump to 
+	blt x1, x2, _isLT	# if x1 < x2, jump to _isLT
 	addi x1, x1, -100	# decrement x1 by 100
 	jal x0, _startBranchTests 		# restart loop
 	

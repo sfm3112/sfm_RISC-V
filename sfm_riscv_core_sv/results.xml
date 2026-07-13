@@ -1,7 +1,7 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1783527905" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="46" time="0.13866114616394043" sim_time_ns="5490.0" ratio_time="39592.92240025998">
+    <property name="random_seed" value="1783972637" />
+    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="46" time="0.18024420738220215" sim_time_ns="5490.0" ratio_time="30458.676479730795">
       <failure error_type="AssertionError" error_msg="Branch Loop Failed: x1 expected 337, got 837" />
     </testcase>
   </testsuite>

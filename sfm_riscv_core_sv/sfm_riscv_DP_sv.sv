@@ -30,7 +30,7 @@ logic [3:0]byteEnable;
 
 //----------------------------------------------------------ALU-----------------------------------------------------------//
 
-	sfm_riscv_ALU_sv #(.WIDTH(WIDTH)) ArithmeticLogicUnit (.intA(rsA), .intB(AluB), .Func3(IW[14:12]), .add_sub(((IW[30] & IW[5]) | IW[6])), .ALUres(ALUres), .CNZres(CNZres));
+	sfm_riscv_ALU_sv #(.WIDTH(WIDTH)) ArithmeticLogicUnit (.intA(rsA), .intB(AluB), .Func3(IW[14:12]), .add_sub(((IW[30] & IW[5]) | IW[6])), .SHsel(IW[30]), .ALUres(ALUres), .CNZres(CNZres));
 	
 //----------------------------------------------------ALU'S B INPUT MUX----------------RSB 1, IMM 0-----------------------//
 	
