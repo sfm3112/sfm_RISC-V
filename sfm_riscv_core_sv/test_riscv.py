@@ -25,8 +25,8 @@ def safe_format(signal, as_hex=False):
 #===============================================#
 #           Signal Watcher Functions            #
 #===============================================#
-async def waitForSignalLdRD(dut):
-	while int(dut.DataPath.LdRD.value) == 0:
+async def waitForSignalLDrd(dut):
+	while int(dut.DataPath.LDrd.value) == 0:
 		await RisingEdge(dut.clk)
 	await FallingEdge(dut.clk)
 
