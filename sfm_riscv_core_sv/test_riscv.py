@@ -28,20 +28,19 @@ def safe_format(signal, as_hex=False):
 
 # Function to check for MC0 #
 
-async def waitForNextIW(dut):
+async def waitForNextIW(dut):	#For testing the sequential tests
 	
 	while int(dut.ControlUnit.LDrd.value) == 0:
 		await RisingEdge(dut.clk)
 		
 	await FallingEdge(dut.clk)
 	
-	#if int(dut.ControlUnit.MC.value) == 2:
-	#	await RisingEdge(dut.clk)
+async def waitForBranchCalc(dut):	#For testing the branch loop
+	
+	while int(dut.ControlUnit.LdMax.value) == 0:
+		await RisingEdge(dut.clk)
 		
-	#while int(dut.ControlUnit.MC.value) != 2:
-	#	await RisingEdge(dut.clk)
-		
-	#await FallingEdge(dut.clk)
+	await FallingEdge(dut.clk)
 
 @cocotb.test()
 async def testA(dut):
