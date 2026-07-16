@@ -30,6 +30,11 @@ async def waitForSignalLDrd(dut):
 		await RisingEdge(dut.clk)
 	await FallingEdge(dut.clk)
 
+async def waitForSignalMC1(dut):
+	while int(dut.ControlUnit.MC.value) == 01:
+		await RisingEdge(dut.clk)
+	await FallingEdge(dut.clk)
+
 async def waitForSignalLdPC(dut):
 	while int(dut.DataPath.LdPC.value) == 0:
 		await RisingEdge(dut.clk)
@@ -100,12 +105,13 @@ async def testA(dut):
 		#===============================================#
 		
 		for regNum, expectedVal, originalLine in goodOutput:
-			await waitForSignalLDrd(dut)
 			
+			await waitForSignalMC1(dut)
 			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
 			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres, as_hex=True)
 			wbMuxTb = safe_format(dut.DataPath.WBmux.out, as_hex=True)
 			wbMuxSelTb = safe_format(dut.DataPath.WBmux.Sel)
+			await waitForSignalLDrd(dut)
 			wbDecoderSel = safe_format(dut.DataPath.WriteBackDecoder.DECsel)
 			actualValRaw = safe_format(dut.DataPath.register_stage[regNum].NbitRegister.Q)
 			
