@@ -100,7 +100,7 @@ async def testA(dut):
 		#===============================================#
 		
 		for regNum, expectedVal, originalLine in goodOutput:
-			await waitForSignalLdRD(dut)
+			await waitForSignalLDrd(dut)
 			
 			InstWordTb = safe_format(dut.DataPath.IWRreg.Q, as_hex=True)
 			aluTb = safe_format(dut.DataPath.ArithmeticLogicUnit.ALUres, as_hex=True)
