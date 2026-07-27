@@ -8,7 +8,7 @@
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // WIDTH left undefined here so it must take the WIDTH defined in core, else compile error.                   NOT COMPLETED
-module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, output logic [2:0]CNZres, input logic [2:0]WBsel, input logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR,
+module sfm_riscv_DP_sv # (parameter int WIDTH = 32)(input logic clk, rst, output logic [WIDTH-1:0]IW, output logic [2:0]CNZres, input logic [2:0]WBsel, input logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR, MAXsel,
 									output logic [WIDTH-1:0]OPD);
 	
 /////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ genvar i;
 	
 	sfm_riscv_NbitReg_sv #(.WIDTH(WIDTH)) MABreg (.D(Imm), .clk(LdMAB), .rst(rst), .Q(MABout));
 	sfm_riscv_NbitReg_sv #(.WIDTH(WIDTH)) MAXreg (.D(MAXin), .clk(LdMAX), .rst(rst), .Q(MAXout));
-	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(2), .SelWidth(1)) MAXmux (.muxInput({rsA, PCout}), .Sel(IW[6]), .out(MAXin));
+	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SelNum(2), .SelWidth(1)) MAXmux (.muxInput({PCout, rsA}), .Sel(MAXsel), .out(MAXin));
 	
 	assign MARout = MABout + MAXout;
 	

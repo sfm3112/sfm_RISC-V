@@ -17,9 +17,9 @@ logic LDrd, LdPC, cntPC, LdIWR, LdMAB, LdMAX, pR_W, dR_W, LdOPDR;
 
 ///////////////////////////////////////////////////COMPONENT INSTANTIATION//////////////////////////////////////////////////	
 	sfm_riscv_DP_sv #(.WIDTH(WIDTH)) DataPath (.clk(clk), .rst(rst), .IW(IW), .CNZres(CNZres), .LDrd(LDrd), .LdPC(LdPC), .cntPC(cntPC), 
-															.LdIWR(LdIWR), .WBsel(WBsel), .LdMAB(LdMAB), .LdMAX(LdMAX), .pR_W(pR_W), .dR_W(dR_W), .LdOPDR(LdOPDR),
+															.LdIWR(LdIWR), .MAXsel(MAXsel), .WBsel(WBsel), .LdMAB(LdMAB), .LdMAX(LdMAX), .pR_W(pR_W), .dR_W(dR_W), .LdOPDR(LdOPDR),
 															.OPD(OPD));
 
 	sfm_riscv_CU_sv #(.WIDTH(WIDTH)) ControlUnit (.clk(clk), .rst(rst), .IW(IW), .CNZres(CNZres), .LDrd(LDrd), .LdPC(LdPC), .cntPC(cntPC), 
-															.LdIWR(LdIWR), .WBsel(WBsel), .LdMAB(LdMAB), .LdMAX(LdMAX), .pR_W(pR_W), .dR_W(dR_W), .LdOPDR(LdOPDR));
+															.LdIWR(LdIWR), .MAXsel(MAXsel), .WBsel(WBsel), .LdMAB(LdMAB), .LdMAX(LdMAX), .pR_W(pR_W), .dR_W(dR_W), .LdOPDR(LdOPDR));
 endmodule
