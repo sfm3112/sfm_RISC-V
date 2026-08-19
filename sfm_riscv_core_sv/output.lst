@@ -1,0 +1,5 @@
+_start 0x00000000
+_notSuccess 0x0000001c
+_success 0x00000030
+_done 0x00000044
+_trap 0x00000060

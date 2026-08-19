@@ -1,18 +1,20 @@
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//																																								  //
-//												 		  N-Bit Register RISCV File															        //
-//													Created by: Stephen Meyer (8/6/2026)															  //
-//																																								  //
-//														Copyright (C) 2026 Stephen Meyer																  //
-//																																								  //
+
+	N-Bit Register with load RISCV File
+	Created by: Stephen Meyer (6/1/2026)
+	
+	Copyright (C) 2026 Stephen Meyer
+
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_NbitReg_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]d, input logic clk, output logic [WIDTH-1:0]q);
+module sfm_riscv_NbitReg_ld_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]d, input logic clk, ld, output logic [WIDTH-1:0]q);
 
 ///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
 
 always_ff @(posedge clk) begin	//activates on either rising edge of clock cycle or reset signal (reset async)
+	if (ld) begin
 		q <= d;												//If reset is not high, set Q equal to D
+	end
 end
 
 endmodule

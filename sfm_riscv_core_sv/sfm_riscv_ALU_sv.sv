@@ -1,76 +1,128 @@
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	32-Bit Arithmetic Logic Unit RISCV File
-	Created by: Stephen Meyer (6/1/2026)
-	
-	Copyright (C) 2026 Stephen Meyer
-
+//																																								  //
+//												  32-Bit Arithmetic Logic Unit RISCV File													        //
+//													Created by: Stephen Meyer (6/1/2026)															  //
+//																																								  //
+//														Copyright (C) 2026 Stephen Meyer																  //
+//																																								  //
 *///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-module sfm_riscv_ALU_sv # (parameter int WIDTH = 32)(input logic [WIDTH-1:0]intA, intB, input logic [2:0]Func3, input logic add_sub, SHsel, output logic [WIDTH-1:0]ALUres, output logic [2:0]CNZres);
+module sfm_riscv_ALU_sv # (parameter int WIDTH = 32, parameter int ALU_SEL_WIDTH = 5)
+								(input logic [WIDTH-1:0] pc_out, op_a, imm, op_b, input logic [ALU_SEL_WIDTH-1:0] alu_sel, output logic [WIDTH-1:0] alu_res, output logic b_check);
 
-/////////////////////////////////////////////////////////WIRE NAMES/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////OPCODE NAMES////////////////////////////////////////////////////////
 
-logic [WIDTH-1:0]addSubRes, SLLres, SLTres, SLTUres, XORres, SrlSraRes, ORres, ANDres;
-logic [WIDTH:0] FintA, FintB, FaddSubRes;
+localparam logic [ALU_SEL_WIDTH-1:0] ADD = 'd0; //also serves as NOP
+localparam logic [ALU_SEL_WIDTH-1:0] SLL = 'd1;
+localparam logic [ALU_SEL_WIDTH-1:0] SLT = 'd2;
+localparam logic [ALU_SEL_WIDTH-1:0] SLTU = 'd3;
+localparam logic [ALU_SEL_WIDTH-1:0] XOR = 'd4;
+localparam logic [ALU_SEL_WIDTH-1:0] SRL = 'd5;
+localparam logic [ALU_SEL_WIDTH-1:0] OR = 'd6;
+localparam logic [ALU_SEL_WIDTH-1:0] AND = 'd7;
+localparam logic [ALU_SEL_WIDTH-1:0] SUB = 'd8;
+localparam logic [ALU_SEL_WIDTH-1:0] SRA = 'd9;
 
-///////////////////////////////////////////////////////INTERNAL LOGIC///////////////////////////////////////////////////////
+localparam logic [ALU_SEL_WIDTH-1:0] ADDI_LD_JALR_ST_LUI = 'd16;
+localparam logic [ALU_SEL_WIDTH-1:0] SLLI = 'd17;
+localparam logic [ALU_SEL_WIDTH-1:0] SLTI = 'd18;
+localparam logic [ALU_SEL_WIDTH-1:0] SLTIU = 'd19;
+localparam logic [ALU_SEL_WIDTH-1:0] XORI = 'd20;
+localparam logic [ALU_SEL_WIDTH-1:0] SRLI = 'd21;
+localparam logic [ALU_SEL_WIDTH-1:0] ORI = 'd22;
+localparam logic [ALU_SEL_WIDTH-1:0] ANDI = 'd23;
+localparam logic [ALU_SEL_WIDTH-1:0] SRAI = 'd24;
 
-//////////////////////////////////////////////////////FINAL OUTPUT MUX//////////////////////////////////////////////////////
+localparam logic [ALU_SEL_WIDTH-1:0] BEQ_BNE = 'd10;
+localparam logic [ALU_SEL_WIDTH-1:0] BLT_BGE = 'd13;
+localparam logic [ALU_SEL_WIDTH-1:0] BLTU_BGEU = 'd14;
+
+localparam logic [ALU_SEL_WIDTH-1:0] AUIPC_JAL = 'd12;
 
 always_comb begin
-	unique case (Func3)
-		3'b000 : ALUres = addSubRes;
-		3'b001 : ALUres = SLLres;
-		3'b010 : ALUres = SLTres;
-		3'b011 : ALUres = SLTUres;
-		3'b100 : ALUres = XORres;
-		3'b101 : ALUres = SrlSraRes;
-		3'b110 : ALUres = ORres;
-		3'b111 : ALUres = ANDres;
-		default : ALUres = '0;
-	endcase
-end
+
+	b_check = '0;
 	
-//////////////////////////////////////////////////////////ADD-SUB///////////////////////////////////////////////////////////
-assign FintA = {1'b0, intA};
-assign FintB = {1'b0, intB};
-assign FaddSubRes = FintA + (FintB ^ {WIDTH{add_sub}}) + add_sub;
-assign addSubRes = FaddSubRes[WIDTH-1:0];
-assign CNZres = {FaddSubRes[WIDTH], FaddSubRes[WIDTH-1], !ALUres};
-
-//////////////////////////////////////////////////////////SLLres////////////////////////////////////////////////////////////
-
-assign SLLres = intA << intB[4:0];
-
-//////////////////////////////////////////////////////////SLTres////////////////////////////////////////////////////////////
-
-assign SLTres = WIDTH'($signed(intA) < $signed(intB));
-
-//////////////////////////////////////////////////////////SLTUres///////////////////////////////////////////////////////////
-
-assign SLTUres = WIDTH'($unsigned(intA) < $unsigned(intB));
-
-//////////////////////////////////////////////////////////XORres////////////////////////////////////////////////////////////
-
-assign XORres = intA ^ intB;
-
-/////////////////////////////////////////////////////////SrlSraRes//////////////////////////////////////////////////////////
-
-always_comb begin
-	unique case (SHsel) //unsure about this input, watch for bugs
-		1'b0 : SrlSraRes = intA >> intB[4:0];
-		1'b1 : SrlSraRes = $unsigned($signed(intA) >>> intB[4:0]);
-		default : SrlSraRes = '0;
+	case (alu_sel)
+		ADD : begin
+			alu_res = WIDTH'(op_a + op_b);
+		end
+		SUB : begin
+			alu_res = WIDTH'(op_a - op_b);
+		end
+		SLL : begin
+			alu_res = WIDTH'(op_a << op_b[4:0]);
+		end
+		SLT : begin
+			alu_res = ($signed(op_a) < $signed(op_b)) ? WIDTH'(1) : WIDTH'(0);
+		end
+		SLTU : begin
+			alu_res = ($unsigned(op_a) < $unsigned(op_b)) ? WIDTH'(1) : WIDTH'(0);
+		end
+		XOR : begin
+			alu_res = WIDTH'(op_a ^ op_b);
+		end
+		SRL : begin
+			alu_res = WIDTH'(op_a >> op_b[4:0]);
+		end
+		SRA : begin
+			alu_res = WIDTH'($signed(op_a) >>> op_b[4:0]);
+		end
+		OR : begin
+			alu_res = WIDTH'(op_a | op_b);
+		end
+		AND : begin
+			alu_res = WIDTH'(op_a & op_b);
+		end
+		
+		ADDI_LD_JALR_ST_LUI : begin
+			alu_res = WIDTH'(op_a + $signed(imm));
+		end
+		SLTI : begin
+			alu_res = ($signed(op_a) < $signed(imm)) ? WIDTH'(1) : WIDTH'(0);
+		end
+		SLTIU : begin
+			alu_res = ($unsigned(op_a) < $unsigned(imm)) ? WIDTH'(1) : WIDTH'(0);
+		end
+		XORI : begin
+			alu_res = WIDTH'(op_a ^ imm);
+		end
+		ORI : begin
+			alu_res = WIDTH'(op_a | imm);
+		end
+		ANDI : begin
+			alu_res = WIDTH'(op_a & imm);
+		end
+		SLLI : begin
+			alu_res = WIDTH'(op_a << imm[4:0]);
+		end
+		SRLI : begin
+			alu_res = WIDTH'(op_a >> imm[4:0]);
+		end
+		SRAI : begin
+			alu_res = WIDTH'($signed(op_a) >>> imm[4:0]);
+		end
+		
+		BEQ_BNE : begin
+			b_check = (op_a - op_b) ? '0 : '1;
+			alu_res = WIDTH'(pc_out + imm);
+		end
+		BLT_BGE : begin
+			b_check = ($signed(op_a) < $signed(op_b)) ? '1 : '0;
+			alu_res = WIDTH'(pc_out + imm);
+		end
+		BLTU_BGEU : begin
+			b_check = ($unsigned(op_a) < $unsigned(op_b)) ? '1 : '0;
+			alu_res = WIDTH'(pc_out + imm);
+		end
+		AUIPC_JAL : begin
+			alu_res = WIDTH'(pc_out + imm);
+		end
+		default : begin
+			alu_res = WIDTH'(0);
+		end
 	endcase
 end
 
-///////////////////////////////////////////////////////////ORres////////////////////////////////////////////////////////////
-
-assign ORres = intA | intB;
-
-///////////////////////////////////////////////////////////ANDres///////////////////////////////////////////////////////////
-
-assign ANDres = intA & intB;
 
 endmodule
