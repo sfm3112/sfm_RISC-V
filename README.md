@@ -28,7 +28,7 @@ Synthesized and validated using **Intel Quartus Prime** targeting an **Altera Cy
 | Metric | Measurement / Specification |
 | :--- | :--- |
 | **Max Clock Frequency ($F_{max}$)** | **67.7 MHz** (Slow 1200mV 85C Model) |
-| **Logic Utilization** | ~4,900 Logic Cells (~4.3% of Cyclone IV E) |
+| **Logic Utilization** | ~4,900 Logic Cells |
 | **Block Memory Bits** | Utilizing internal M9K RAM blocks for Data/Instruction memory |
 | **Execution Performance** | **~3x Cycle-Count Reduction** vs. baseline sequential CPU architecture |
 
