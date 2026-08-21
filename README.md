@@ -46,9 +46,6 @@ Design Docs
 
 * [Design documentation](/Design_Docs)
 
-Weekly Summaries
-
-* [Weekly Summaries](/Weekly_Summaries)
 
 ## Supported Instructions
 
