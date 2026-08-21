@@ -23,7 +23,7 @@ This project implements a fully functional 5-stage pipelined RV32I RISC-V CPU co
 
 ## Hardware Performance & Synthesis Results
 
-Synthesized and validated using **Intel Quartus Prime** targeting an **Altera Cyclone IV E FPGA** (`EP4CE115F29C7`).
+Synthesized and validated using **Intel Quartus Prime** targeting an **Altera Cyclone IV E FPGA** (`EP4CE22F17C6`).
 
 | Metric | Measurement / Specification |
 | :--- | :--- |
