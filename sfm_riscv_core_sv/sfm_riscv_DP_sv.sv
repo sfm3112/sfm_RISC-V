@@ -68,33 +68,6 @@ logic [WIDTH-1:0] rs_b_held_a;
 
 //////////////////////////////////////////////////////////PIPELINE//////////////////////////////////////////////////////////
 
-//----------------------------------------------------PIPELINE SIGNALS----------------------------------------------------//
-
-
-//	invalid_iw = wb_code.invalid_iw;
-//	rd = wb_code.rd;
-//	ld_rd = wb_code.ld_rd;
-//	wb_mux_sel = wb_code.wb_mux_sel;
-//	pc_wb = wb_code.pc_wb;
-//	stall = mem_code.stall;
-//	flush = mem_code.flush;
-//	ld_pc = mem_code.ld_pc;
-//	p_wren = mem_code.p_wren;
-//	d_wren = mem_code.d_wren;
-//	ld_ipdr = mem_code.ld_ipdr;
-//	ld_opdr = mem_code.ld_opdr;
-//	ld_type = mem_code.ld_type;
-//	ipd_mux_sel = mem_code.ipd_mux_sel;
-//	mf_sel = mem_code.mf_sel;
-//	af_b_sel = ex_code.af_b_sel;
-//	af_a_sel = ex_code.af_a_sel;
-//	b_type = ex_code.b_type;
-//	alu_sel = ex_code.alu_sel;
-//	op_b_sel = ex_code.op_b_sel;
-//	op_a_sel = ex_code.op_a_sel;
-//	rs_2 = ex_code.rs_2;
-//	rs_1 = ex_code.rs_1;
-//	imm = ex_code.imm;
 
 //------------------------------------------------------PIPELINE MUX------------------------------------------------------//
 										 
