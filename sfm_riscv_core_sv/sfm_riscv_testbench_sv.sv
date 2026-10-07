@@ -30,7 +30,7 @@ initial begin
 //post reset period
 
 	for (int i = 0; i <= 1000; i++) begin
-		rst_n_tb = 1'b1; clk_tb = 1'b0; ipd_tb = 32'h55555555;
+		rst_n_tb = 1'b1; clk_tb = 1'b0; ipd_tb = 32'hffffffff;
 		#period;
 		clk_tb = 1'b1;
 		$display("[Time %0t] Loop: %0d || x0: 0x%0h | x1: 0x%0h | x2: 0x%0h | x3: 0x%0h | x4: 0x%0h || PC: 0x%0h | IR: 0x%0h | cu_code: 0x%0h",
