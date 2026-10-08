@@ -1,0 +1,7 @@
+{
+	"common_dir" : "C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/",
+	"acds_version" : "Version 18.1.0",
+	"platform" : "windows",
+	"os" : "Windows 10",
+	"qpf" : "sfm_riscv_core_sv.qpf"
+}

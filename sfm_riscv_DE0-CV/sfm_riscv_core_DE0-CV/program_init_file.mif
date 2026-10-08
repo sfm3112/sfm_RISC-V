@@ -1,0 +1,69 @@
+-- Copyright (C) 2018  Intel Corporation. All rights reserved.
+-- Your use of Intel Corporation's design tools, logic functions 
+-- and other software and tools, and its AMPP partner logic 
+-- functions, and any output files from any of the foregoing 
+-- (including device programming or simulation files), and any 
+-- associated documentation or information are expressly subject 
+-- to the terms and conditions of the Intel Program License 
+-- Subscription Agreement, the Intel Quartus Prime License Agreement,
+-- the Intel FPGA IP License Agreement, or other applicable license
+-- agreement, including, without limitation, that your use is for
+-- the sole purpose of programming logic devices manufactured by
+-- Intel and sold by Intel or its authorized distributors.  Please
+-- refer to the applicable agreement for further details.
+
+-- Quartus Prime generated Memory Initialization File (.mif)
+
+WIDTH = 32;
+DEPTH = 4096;
+
+ADDRESS_RADIX = HEX;
+DATA_RADIX = HEX;
+
+CONTENT BEGIN
+    0000  :  40000F13;
+    0001  :  001F1F13;
+    0002  :  401080B3;
+    0003  :  40210133;
+    0004  :  403181B3;
+    0005  :  40420233;
+    0006  :  003F2623;
+    0007  :  00208093;
+    0008  :  00209093;
+    0009  :  001F2023;
+    000A  :  00310113;
+    000B  :  FFC02183;
+    000C  :  003171B3;
+    000D  :  003F2223;
+    000E  :  00219193;
+    000F  :  004F2083;
+    0010  :  001181B3;
+    0011  :  003F2223;
+    0012  :  00211113;
+    0013  :  FFC02183;
+    0014  :  0021F1B3;
+    0015  :  003F2423;
+    0016  :  4021D193;
+    0017  :  008F2083;
+    0018  :  003081B3;
+    0019  :  003F2423;
+    001A  :  008F2083;
+    001B  :  004F2103;
+    001C  :  00100193;
+    001D  :  0021F1B3;
+    001E  :  00300863;
+    001F  :  00CF2183;
+    0020  :  001181B3;
+    0021  :  003F2623;
+    0022  :  00109093;
+    0023  :  40115113;
+    0024  :  000F2183;
+    0025  :  FFF18193;
+    0026  :  00300663;
+    0027  :  003F2023;
+    0028  :  FD1FF06F;
+    0029  :  00CF2183;
+    002A  :  FE302E23;
+    002B  :  F55FF06F;
+    [002C..0FFF]  :  00000000;
+END;

@@ -1,6 +1,6 @@
 import sys
 
-def bin_to_mif(bin_filename, mif_filename, depth=4096, width=32):
+def bin_to_mif(bin_filename, mif_filename, depth=8192, width=32):
     with open(bin_filename, 'rb') as f:
         data = f.read()
 

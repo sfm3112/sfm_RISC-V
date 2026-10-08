@@ -1,0 +1,36 @@
+Quartus Prime Archive log --	C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_v2.1_sv.qarlog
+
+Archive:	C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_v2.1_sv.qar
+Date:		Thu Oct 08 15:28:00 2026
+Quartus Prime		18.1.0 Build 625 09/12/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/PM_DM.qip
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/PM_DM.v
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/assignment_defaults.qdf
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/program_init_file.mif
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_bcd_to_seven_seg_str_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_bin_to_7_seg_disp_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_fpga_emulation.sdc
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_fpga_emulation_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_ALU_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_BCondLogic_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_BMaskLogic_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_Byteena_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_CU_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_DP_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_NbitMux_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_NbitReg_ld_rst_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_NbitReg_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_PC_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_Pipeline_Reg_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_WbDec_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_sv.out.sdc
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_sv.qpf
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_sv.qsf
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_core_sv.sv
+C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_DE0-CV/sfm_riscv_core_DE0-CV/sfm_riscv_testbench_sv.sv
+	======= Total: 25 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
