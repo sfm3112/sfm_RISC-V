@@ -38,7 +38,7 @@ Synthesized and validated using **Intel Quartus Prime** targeting an **Altera Cy
 
 ## Repository Structure
 
-Quartus Project
+Quartus Project Archives
 
 * [RISC-V SystemVerilog](/sfm_riscv_core_sv)
 
