@@ -10,7 +10,7 @@
 
 module sfm_riscv_CU_sv # (parameter int WIDTH = 32, parameter int PIPELINE_WIDTH = 113, parameter int ALU_SEL_WIDTH = 5,
 									parameter int B_TYPE_WIDTH = 3, parameter int TYPE_WIDTH = 3)
-									(input logic clk, rst_n, input logic [WIDTH-1:0]inst_word, pc_out, output logic [PIPELINE_WIDTH-1:0] cu_code);
+									(input logic clk, rst_n, input logic flush_cu, input logic [WIDTH-1:0]inst_word, pc_out, output logic [PIPELINE_WIDTH-1:0] cu_code);
 
 /////////////////////////////////////////////////////////CONSTANTS//////////////////////////////////////////////////////////
 
@@ -87,8 +87,8 @@ logic [1:0] wb_mux_sel;
 logic [6:0] haz_flg_z, haz_flg_a, haz_flg_b; 
 // logic [6:0] haz_flg_c;
 
-always_ff @(posedge clk or negedge rst_n) begin
-    if (!rst_n) begin
+always_ff @(posedge clk or negedge rst_n or posedge flush_cu) begin
+    if (!rst_n | flush_cu) begin
 		  haz_flg_a <= '0;
 		  haz_flg_b <= '0;
 		  //haz_flg_c <= '0;

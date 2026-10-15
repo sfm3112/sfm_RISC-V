@@ -14,12 +14,13 @@ module sfm_riscv_core_sv # (parameter int WIDTH = 32, parameter int PIPELINE_WID
 
 logic [63:0] inst_word;
 logic [PIPELINE_WIDTH-1:0] cu_code;
+logic flush_cu;
 
 ///////////////////////////////////////////////////COMPONENT INSTANTIATION//////////////////////////////////////////////////	
 	sfm_riscv_DP_sv #(.WIDTH(WIDTH), .PIPELINE_WIDTH(PIPELINE_WIDTH)) 
-		DataPath (.clk(clk), .rst_n(rst_n), .inst_word(inst_word), .cu_code(cu_code), .ipd(ipd), .opd(opd));
+		DataPath (.clk(clk), .rst_n(rst_n), .inst_word(inst_word), .cu_code(cu_code), .ipd(ipd), .opd(opd), .flush_cu(flush_cu));
 
 	sfm_riscv_CU_sv #(.WIDTH(WIDTH), .PIPELINE_WIDTH(PIPELINE_WIDTH)) 
-		ControlUnit (.clk(clk), .rst_n(rst_n), .inst_word(inst_word[WIDTH-1:0]), .pc_out(inst_word[63:WIDTH]), .cu_code(cu_code));
+		ControlUnit (.clk(clk), .rst_n(rst_n), .inst_word(inst_word[WIDTH-1:0]), .flush_cu(flush_cu), .pc_out(inst_word[63:WIDTH]), .cu_code(cu_code));
 
 endmodule

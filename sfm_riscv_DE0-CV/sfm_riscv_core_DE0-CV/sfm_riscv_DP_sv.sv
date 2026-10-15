@@ -41,7 +41,7 @@ typedef struct packed{
 module sfm_riscv_DP_sv # (parameter int WIDTH = 32, parameter int PIPELINE_WIDTH = 113)
 								(input logic clk, rst_n, output logic [63:0]inst_word,
 																	input cu_code_t cu_code, input logic [WIDTH-1:0]ipd, 
-																	output logic [WIDTH-1:0]opd);
+																	output logic [WIDTH-1:0]opd, output logic flush_cu);
 	
 //////////////////////////////////////////////////////LOCALPARAM NAMES//////////////////////////////////////////////////////
 	
@@ -182,5 +182,7 @@ genvar i;
 
 	sfm_riscv_NbitMux_sv #(.WIDTH(WIDTH), .SEL_NUM(3), .SEL_WIDTH(2)) 
 				WriteBackMux (.mux_input({(wb_code.pc_wb + 'h4), mem_wb, alu_wb}), .sel(wb_code.wb_mux_sel), .out(dw));
+				
+assign flush_cu = (mem_code.flush | b_taken_held);
 	
 endmodule

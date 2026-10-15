@@ -1,6 +1,0 @@
-<testsuites name="results">
-  <testsuite name="all" package="all">
-    <property name="random_seed" value="1784213504" />
-    <testcase name="testA" classname="test_riscv" file="C:/Users/Apex/Projects/RISC-V_Project/sfm_RISC-V/sfm_riscv_core_sv/test_riscv.py" lineno="47" time="0.06127309799194336" sim_time_ns="495.0" ratio_time="8078.586136857096" />
-  </testsuite>
-</testsuites>
